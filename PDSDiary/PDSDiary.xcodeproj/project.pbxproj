@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		37324A8429405FE2002BC74E /* PlanAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37324A8329405FE2002BC74E /* PlanAddViewController.swift */; };
 		37EF1610293DD86C00951A60 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF160F293DD86C00951A60 /* AppDelegate.swift */; };
 		37EF1612293DD86C00951A60 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF1611293DD86C00951A60 /* SceneDelegate.swift */; };
 		37EF1614293DD86C00951A60 /* BannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF1613293DD86C00951A60 /* BannerViewController.swift */; };
@@ -28,6 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		37324A8329405FE2002BC74E /* PlanAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanAddViewController.swift; sourceTree = "<group>"; };
 		37EF160C293DD86C00951A60 /* PDSDiary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PDSDiary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37EF160F293DD86C00951A60 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		37EF1611293DD86C00951A60 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -61,6 +63,48 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		37324A85294064CA002BC74E /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				37324A8729406509002BC74E /* PlusPlan */,
+				37324A86294064D9002BC74E /* Calendar */,
+			);
+			path = Scene;
+			sourceTree = "<group>";
+		};
+		37324A86294064D9002BC74E /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				37EF1632293E21DC00951A60 /* Controller */,
+				37EF1631293E21D400951A60 /* View */,
+			);
+			path = Calendar;
+			sourceTree = "<group>";
+		};
+		37324A8729406509002BC74E /* PlusPlan */ = {
+			isa = PBXGroup;
+			children = (
+				37324A8929406548002BC74E /* View */,
+				37324A882940653B002BC74E /* Controller */,
+			);
+			path = PlusPlan;
+			sourceTree = "<group>";
+		};
+		37324A882940653B002BC74E /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				37324A8329405FE2002BC74E /* PlanAddViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		37324A8929406548002BC74E /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		37EF1603293DD86C00951A60 = {
 			isa = PBXGroup;
 			children = (
@@ -80,15 +124,14 @@
 		37EF160E293DD86C00951A60 /* PDSDiary */ = {
 			isa = PBXGroup;
 			children = (
-				37EF164A293F725100951A60 /* Reqeust */,
+				37EF1635293E222500951A60 /* Application */,
 				37EF1633293E21F100951A60 /* Common */,
 				37EF1630293E21C600951A60 /* Model */,
-				37EF1631293E21D400951A60 /* View */,
-				37EF1632293E21DC00951A60 /* Controller */,
-				37EF1635293E222500951A60 /* Reference */,
-				37EF1636293E223C00951A60 /* rename */,
+				37324A85294064CA002BC74E /* Scene */,
 				37EF1620293DD86D00951A60 /* Info.plist */,
 				37EF1618293DD86C00951A60 /* PDSDiary.xcdatamodeld */,
+				37EF1636293E223C00951A60 /* rename */,
+				37EF1634293E220400951A60 /* TestDouble */,
 			);
 			path = PDSDiary;
 			sourceTree = "<group>";
@@ -104,8 +147,8 @@
 		37EF1630293E21C600951A60 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				37EF1626293E071F00951A60 /* PDSModel.swift */,
 				37EF1642293F0C3500951A60 /* Grade.swift */,
+				37EF1626293E071F00951A60 /* PDSModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -113,10 +156,10 @@
 		37EF1631293E21D400951A60 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				37EF162C293E152A00951A60 /* DiaryTableViewCell.swift */,
-				37EF1644293F684400951A60 /* WiseSayingView.swift */,
 				37EF1646293F6C4A00951A60 /* CalendarView.swift */,
+				37EF162C293E152A00951A60 /* DiaryTableViewCell.swift */,
 				37EF1648293F6D8B00951A60 /* DiaryView.swift */,
+				37EF1644293F684400951A60 /* WiseSayingView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -132,7 +175,7 @@
 		37EF1633293E21F100951A60 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				37EF1634293E220400951A60 /* TestDouble */,
+				37EF164A293F725100951A60 /* Reqeust */,
 				37EF1628293E13A900951A60 /* Extension */,
 			);
 			path = Common;
@@ -146,13 +189,13 @@
 			path = TestDouble;
 			sourceTree = "<group>";
 		};
-		37EF1635293E222500951A60 /* Reference */ = {
+		37EF1635293E222500951A60 /* Application */ = {
 			isa = PBXGroup;
 			children = (
 				37EF160F293DD86C00951A60 /* AppDelegate.swift */,
 				37EF1611293DD86C00951A60 /* SceneDelegate.swift */,
 			);
-			path = Reference;
+			path = Application;
 			sourceTree = "<group>";
 		};
 		37EF1636293E223C00951A60 /* rename */ = {
@@ -167,10 +210,10 @@
 		37EF164A293F725100951A60 /* Reqeust */ = {
 			isa = PBXGroup;
 			children = (
-				37EF164B293F725100951A60 /* WiseSayingRequest.swift */,
 				37EF164C293F725100951A60 /* APIError.swift */,
-				37EF164D293F725100951A60 /* HTTPMethod.swift */,
 				37EF164E293F725100951A60 /* APIRequest.swift */,
+				37EF164D293F725100951A60 /* HTTPMethod.swift */,
+				37EF164B293F725100951A60 /* WiseSayingRequest.swift */,
 			);
 			path = Reqeust;
 			sourceTree = "<group>";
@@ -258,6 +301,7 @@
 				37EF1645293F684400951A60 /* WiseSayingView.swift in Sources */,
 				37EF1643293F0C3500951A60 /* Grade.swift in Sources */,
 				37EF1649293F6D8B00951A60 /* DiaryView.swift in Sources */,
+				37324A8429405FE2002BC74E /* PlanAddViewController.swift in Sources */,
 				37EF164F293F725100951A60 /* WiseSayingRequest.swift in Sources */,
 				37EF1652293F725100951A60 /* APIRequest.swift in Sources */,
 				37EF1650293F725100951A60 /* APIError.swift in Sources */,

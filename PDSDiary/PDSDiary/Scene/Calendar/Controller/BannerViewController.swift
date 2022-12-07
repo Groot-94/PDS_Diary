@@ -26,16 +26,18 @@ final class BannerViewController: UIViewController {
     private func configureNavigation() {
         let font = UIFont.systemFont(ofSize: 15)
         let configuration = UIImage.SymbolConfiguration(font: font)
-        let image = UIImage(systemName: "plus.app", withConfiguration: configuration)?.withRenderingMode(.alwaysOriginal)
+        let image = UIImage(systemName: "text.badge.plus", withConfiguration: configuration)?.withRenderingMode(.alwaysOriginal)
         
         let plusButton = UIBarButtonItem(title: nil, image: image, target: self, action: #selector(didTapPlusButton))
+        plusButton.tintColor = .systemGreen
         navigationItem.title = "성공이의 하루"
         navigationItem.rightBarButtonItem = plusButton
     }
     
     @objc
     private func didTapPlusButton() {
-        print("새로운 plan 생성")
+        let viewController = PlanAddViewController()
+        navigationController?.pushViewController(viewController, animated: true)
     }
 
     private func configureView() {
