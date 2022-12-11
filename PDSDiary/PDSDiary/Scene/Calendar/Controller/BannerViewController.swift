@@ -8,8 +8,8 @@
 import UIKit
 
 final class BannerViewController: UIViewController {
-    private var diaryDictionary = DiaryDummy.dictionary
     private var selectedDate = Date().convert()
+    private lazy var diaryDictionary = [selectedDate : [PDSModel]()]
     private let wiseSayingView = WiseSayingView()
     private let calendarView = CalendarView()
     private let diaryView = DiaryView()
@@ -38,9 +38,29 @@ final class BannerViewController: UIViewController {
     
     @objc
     private func didTapPlusButton() {
-       
+        let alertController = UIAlertController(title: "계획 추가", message: nil, preferredStyle: .alert)
+        alertController.addTextField()
+        
+        let closeAction = UIAlertAction(title: "취소", style: .cancel)
+        let addAction = UIAlertAction(title: "추가", style: .default) { [weak self] _ in
+            guard let input = alertController.textFields?[0].text,
+                  let date = self?.selectedDate else { return }
+            
+            self?.diaryDictionary[date]?.append(PDSModel(date: Date(),
+                                                         plan: input,
+                                                         doing: "",
+                                                         feedback: "",
+                                                         grade: .none))
+            
+            self?.diaryView.reloadData()
+        }
+        
+        alertController.addAction(closeAction)
+        alertController.addAction(addAction)
+        
+        present(alertController, animated: true)
     }
-
+    
     private func configureView() {
         let mainStackView = UIStackView()
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -100,6 +120,19 @@ extension BannerViewController: UITableViewDelegate {
         
         viewController.delegate = self
         viewController.configureItem(diary[indexPath.row])
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteSwipeAction = UIContextualAction(style: .destructive, title: "삭제", handler: { [weak self] _, _, completionHaldler in
+            guard let date = self?.selectedDate else { return }
+            
+            self?.diaryDictionary[date]?.remove(at: indexPath.row)
+            self?.diaryView.reloadData()
+            
+            completionHaldler(true)
+        })
+        
+        return UISwipeActionsConfiguration(actions: [deleteSwipeAction])
     }
 }
 
