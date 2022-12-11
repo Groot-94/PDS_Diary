@@ -8,7 +8,7 @@
 import UIKit
 
 final class PlanUpdateView: UIView {
-    private var pdsModel: PDSModel?
+    private var pdsModel: Model?
     
     private let mainScrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -78,7 +78,7 @@ final class PlanUpdateView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureItem(_ model: PDSModel?) {
+    func configureItem(_ model: Model?) {
         planTextField.text = model?.plan
         doTextView.text = model?.doing
         feedbackTextView.text = model?.feedback
@@ -86,7 +86,7 @@ final class PlanUpdateView: UIView {
         pdsModel = model
     }
     
-    func item() -> PDSModel? {
+    func item() -> Model? {
         switch gradeSegmentedControl.selectedSegmentIndex {
         case 0:
             pdsModel?.grade = .good

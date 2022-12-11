@@ -8,8 +8,9 @@
 import UIKit
 
 final class BannerViewController: UIViewController {
-    private var selectedDate = Date().convert()
-    private lazy var diaryDictionary = [selectedDate : [PDSModel]()]
+    private var selectedDate = Date()
+    private var models = [Model]()
+    private var currentModels = [Model]()
     private let wiseSayingView = WiseSayingView()
     private let calendarView = CalendarView()
     private let diaryView = DiaryView()
@@ -46,11 +47,11 @@ final class BannerViewController: UIViewController {
             guard let input = alertController.textFields?[0].text,
                   let date = self?.selectedDate else { return }
             
-            self?.diaryDictionary[date]?.append(PDSModel(date: Date(),
-                                                         plan: input,
-                                                         doing: "",
-                                                         feedback: "",
-                                                         grade: .none))
+            self?.models.append(Model(date: date.convertCurrenDate(),
+                                        plan: input,
+                                        doing: "",
+                                        feedback: "",
+                                        grade: .none))
             
             self?.diaryView.reloadData()
         }
@@ -86,7 +87,7 @@ final class BannerViewController: UIViewController {
 
 extension BannerViewController: UICalendarSelectionSingleDateDelegate {
     func dateSelection(_ selection: UICalendarSelectionSingleDate, didSelectDate dateComponents: DateComponents?) {
-        guard let date = dateComponents?.date?.convert() else { return }
+        guard let date = dateComponents?.date else { return }
         
         selectedDate = date
         diaryView.reloadData()
@@ -95,16 +96,16 @@ extension BannerViewController: UICalendarSelectionSingleDateDelegate {
 
 extension BannerViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let date = diaryDictionary[selectedDate] else  { return 0 }
+        currentModels = models.filter { $0.date.convert() == selectedDate.convert() }
         
-        return date.count
+        return currentModels.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "Diary", for: indexPath) as? DiaryTableViewCell,
-              let diary = diaryDictionary[selectedDate] else { return UITableViewCell() }
-        
-        cell.configureItems(diary[indexPath.row].plan, grade: diary[indexPath.row].grade)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "Diary", for: indexPath) as? DiaryTableViewCell else { return UITableViewCell() }
+
+        cell.configureItems(currentModels[indexPath.row].plan,
+                            grade: currentModels[indexPath.row].grade)
         
         return cell
     }
@@ -113,20 +114,20 @@ extension BannerViewController: UITableViewDataSource {
 extension BannerViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
-        guard let diary = diaryDictionary[selectedDate] else { return }
         
         let viewController = PlanUpdateViewController()
         present(viewController, animated: true)
         
         viewController.delegate = self
-        viewController.configureItem(diary[indexPath.row])
+        viewController.configureItem(currentModels[indexPath.row])
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteSwipeAction = UIContextualAction(style: .destructive, title: "삭제", handler: { [weak self] _, _, completionHaldler in
-            guard let date = self?.selectedDate else { return }
+            guard let date = self?.currentModels[indexPath.row].date,
+                  let deletedModels = self?.models.filter ({ $0.date != date }) else { return }
             
-            self?.diaryDictionary[date]?.remove(at: indexPath.row)
+            self?.models = deletedModels
             self?.diaryView.reloadData()
             
             completionHaldler(true)
@@ -137,11 +138,10 @@ extension BannerViewController: UITableViewDelegate {
 }
 
 extension BannerViewController: PlanUpdateViewControllerDelegate {
-    func planUpdateViewController(_ updateModel: PDSModel) {
-        guard let diary = diaryDictionary[selectedDate] else { return }
+    func planUpdateViewController(_ updateModel: Model) {
+        models = models.filter { $0.date == selectedDate }
+        models.append(updateModel)
         
-        diaryDictionary[selectedDate] = diary.filter { $0.date != updateModel.date }
-        diaryDictionary[selectedDate]?.append(updateModel)
         diaryView.reloadData()
     }
 }

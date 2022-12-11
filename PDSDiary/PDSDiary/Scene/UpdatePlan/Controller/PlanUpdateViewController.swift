@@ -18,7 +18,7 @@ final class PlanUpdateViewController: UIViewController {
         configureView()
     }
     
-    func configureItem(_ model: PDSModel) {
+    func configureItem(_ model: Model) {
         planUpdateView.configureItem(model)
     }
     

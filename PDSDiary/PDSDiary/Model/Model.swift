@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PDSModel {
+struct Model {
     let date: Date
     var plan: String
     var doing: String
