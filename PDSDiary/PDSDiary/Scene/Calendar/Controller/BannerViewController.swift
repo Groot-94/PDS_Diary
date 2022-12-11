@@ -29,9 +29,11 @@ final class BannerViewController: UIViewController {
         let image = UIImage(systemName: "plus.app", withConfiguration: configuration)?.withRenderingMode(.alwaysOriginal)
         
         let plusButton = UIBarButtonItem(title: nil, image: image, target: self, action: #selector(didTapPlusButton))
-        plusButton.tintColor = .systemGreen
+        plusButton.tintColor = .black
         navigationItem.title = "성공이의 하루"
         navigationItem.rightBarButtonItem = plusButton
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
     }
     
     @objc

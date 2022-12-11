@@ -9,7 +9,7 @@ import UIKit
 
 final class PlanUpdateViewController: UIViewController {
     private let customNavigation = CustomNavigationView()
-    private let planAddView = PlanUpdateView()
+    private let planUpdateView = PlanUpdateView()
     var delegate: PlanUpdateViewControllerDelegate?
     
     override func viewDidLoad() {
@@ -19,7 +19,7 @@ final class PlanUpdateViewController: UIViewController {
     }
     
     func configureItem(_ model: PDSModel) {
-        planAddView.configureItem(model)
+        planUpdateView.configureItem(model)
     }
     
     private func configureView() {
@@ -38,7 +38,7 @@ final class PlanUpdateViewController: UIViewController {
             mainStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
         
-        [customNavigation, planAddView].forEach { mainStackView.addArrangedSubview($0) }
+        [customNavigation, planUpdateView].forEach { mainStackView.addArrangedSubview($0) }
         
         NSLayoutConstraint.activate([
             customNavigation.topAnchor.constraint(equalTo: mainStackView.topAnchor),
@@ -56,7 +56,7 @@ extension PlanUpdateViewController: CustomNavigationViewDelegate {
     }
     
     func didTapAddButton() {
-        guard let model = planAddView.item() else { return }
+        guard let model = planUpdateView.item() else { return }
         
         delegate?.planUpdateViewController(model)
         dismiss(animated: true)

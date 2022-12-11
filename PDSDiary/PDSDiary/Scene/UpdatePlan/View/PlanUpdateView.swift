@@ -51,7 +51,7 @@ final class PlanUpdateView: UIView {
         return textView
     }()
     
-    private let seeTextView: UITextView = {
+    private let feedbackTextView: UITextView = {
         let textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.layer.cornerCurve = .continuous
@@ -81,7 +81,7 @@ final class PlanUpdateView: UIView {
     func configureItem(_ model: PDSModel?) {
         planTextField.text = model?.plan
         doTextView.text = model?.doing
-        seeTextView.text = model?.feedback
+        feedbackTextView.text = model?.feedback
         gradeSegmentedControl.selectedSegmentIndex = model?.grade.score ?? 0
         pdsModel = model
     }
@@ -100,7 +100,7 @@ final class PlanUpdateView: UIView {
         
         pdsModel?.plan = planTextField.text ?? ""
         pdsModel?.doing = doTextView.text
-        pdsModel?.feedback = seeTextView.text
+        pdsModel?.feedback = feedbackTextView.text
         
         return pdsModel
     }
@@ -124,7 +124,7 @@ final class PlanUpdateView: UIView {
             mainStackView.bottomAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.bottomAnchor)
         ])
         
-        [planTextField, doTextView, seeTextView, gradeSegmentedControl].forEach { mainStackView.addArrangedSubview($0) }
+        [planTextField, doTextView, feedbackTextView, gradeSegmentedControl].forEach { mainStackView.addArrangedSubview($0) }
         
         NSLayoutConstraint.activate([
             planTextField.heightAnchor.constraint(equalToConstant: 50)
@@ -139,7 +139,7 @@ final class PlanUpdateView: UIView {
         ])
 
         NSLayoutConstraint.activate([
-            seeTextView.heightAnchor.constraint(equalTo: mainScrollView.heightAnchor, multiplier: 0.4)
+            feedbackTextView.heightAnchor.constraint(equalTo: mainScrollView.heightAnchor, multiplier: 0.4)
         ])
     }
 }

@@ -23,7 +23,7 @@ final class CustomNavigationView: UIView {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(systemName: "arrow.uturn.backward.circle"), for: .normal)
-        button.tintColor = .systemGreen
+        button.tintColor = .black
         
         return button
     }()
@@ -36,11 +36,11 @@ final class CustomNavigationView: UIView {
         return label
     }()
     
-    private let upDateButton: UIButton = {
+    private let updateButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(systemName: "plus.app"), for: .normal)
-        button.tintColor = .systemGreen
+        button.setImage(UIImage(systemName: "rectangle.and.pencil.and.ellipsis"), for: .normal)
+        button.tintColor = .black
         
         return button
     }()
@@ -74,9 +74,9 @@ final class CustomNavigationView: UIView {
             mainStackView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor)
         ])
         
-        [closeButton, titleLabel, upDateButton].forEach { mainStackView.addArrangedSubview($0) }
+        [closeButton, titleLabel, updateButton].forEach { mainStackView.addArrangedSubview($0) }
         
         closeButton.addTarget(self, action: #selector(didTapCloseButton), for: .touchDown)
-        upDateButton.addTarget(self, action: #selector(didTapAddButton), for: .touchDown)
+        updateButton.addTarget(self, action: #selector(didTapAddButton), for: .touchDown)
     }
 }
