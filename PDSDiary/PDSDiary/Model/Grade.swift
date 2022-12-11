@@ -11,16 +11,29 @@ enum Grade: String {
     case bad
     case none
     
-    var score: Double {
+    var score: Int {
         switch self {
         case .good:
-            return 3.0
+            return 0
         case .soso:
-            return 2.0
+            return 1
         case .bad:
-            return 1.0
+            return 2
         case .none: 
-            return 0.0
+            return 3
+        }
+    }
+    
+    var imoticon: String {
+        switch self {
+        case .good:
+            return "😆"
+        case .soso:
+            return "😗"
+        case .bad:
+            return "😔"
+        case .none:
+            return "🫥"
         }
     }
 }

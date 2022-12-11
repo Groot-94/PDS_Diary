@@ -22,11 +22,11 @@ final class DiaryTableViewCell: UITableViewCell {
         return label
     }()
     
-    private let gradeImageView: UIImageView =  {
-        let view = UIImageView()
-        view.translatesAutoresizingMaskIntoConstraints = false
+    private let gradeLabel: UILabel =  {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         
-        return view
+        return label
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -48,26 +48,11 @@ final class DiaryTableViewCell: UITableViewCell {
             mainStackView.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor, constant: -8)
         ])
         
-        [planLabel, gradeImageView].forEach { mainStackView.addArrangedSubview($0) }
-        
-        NSLayoutConstraint.activate([
-            gradeImageView.heightAnchor.constraint(equalTo: planLabel.heightAnchor),
-            gradeImageView.widthAnchor.constraint(equalTo: gradeImageView.heightAnchor)
-        ])
+        [planLabel, gradeLabel].forEach { mainStackView.addArrangedSubview($0) }
     }
     
     func configureItems(_ plan: String?, grade: Grade) {
         planLabel.text = plan
-        
-        switch grade {
-        case .good:
-            gradeImageView.backgroundColor = .systemGreen
-        case .soso:
-            gradeImageView.backgroundColor = .systemOrange
-        case .bad:
-            gradeImageView.backgroundColor = .systemRed
-        case .none:
-            gradeImageView.backgroundColor = .systemGray6
-        }
+        gradeLabel.text = grade.imoticon
     }
 }
