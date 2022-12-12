@@ -1,5 +1,5 @@
 //
-//  updateView.swift
+//  UpdateView.swift
 //  PDSDiary
 //
 //  Created by Groot on 2022/12/07.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class updateView: UIView {
+final class UpdateView: UIView {
     private var model: Model?
     
     private let mainScrollView: UIScrollView = {

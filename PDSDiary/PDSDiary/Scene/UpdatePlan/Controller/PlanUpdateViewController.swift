@@ -9,7 +9,7 @@ import UIKit
 
 final class PlanUpdateViewController: UIViewController {
     private let customNavigation = CustomNavigationView()
-    private let planUpdateView = updateView()
+    private let planUpdateView = UpdateView()
     var delegate: PlanUpdateViewControllerDelegate?
     
     override func viewDidLoad() {

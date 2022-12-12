@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		37324A8429405FE2002BC74E /* PlanUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37324A8329405FE2002BC74E /* PlanUpdateViewController.swift */; };
-		37324A8B2940869F002BC74E /* updateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37324A8A2940869F002BC74E /* updateView.swift */; };
+		37324A8B2940869F002BC74E /* UpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37324A8A2940869F002BC74E /* UpdateView.swift */; };
 		37324A8D29408ADB002BC74E /* CustomNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37324A8C29408ADB002BC74E /* CustomNavigationView.swift */; };
 		37324A8F2941BE84002BC74E /* UITextField+Extenstion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37324A8E2941BE84002BC74E /* UITextField+Extenstion.swift */; };
 		37CD76CE2942F90800E0C9DF /* CustomNavigationViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CD76CD2942F90800E0C9DF /* CustomNavigationViewDelegate.swift */; };
@@ -35,7 +35,7 @@
 
 /* Begin PBXFileReference section */
 		37324A8329405FE2002BC74E /* PlanUpdateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanUpdateViewController.swift; sourceTree = "<group>"; };
-		37324A8A2940869F002BC74E /* updateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = updateView.swift; sourceTree = "<group>"; };
+		37324A8A2940869F002BC74E /* UpdateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateView.swift; sourceTree = "<group>"; };
 		37324A8C29408ADB002BC74E /* CustomNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationView.swift; sourceTree = "<group>"; };
 		37324A8E2941BE84002BC74E /* UITextField+Extenstion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extenstion.swift"; sourceTree = "<group>"; };
 		37CD76CD2942F90800E0C9DF /* CustomNavigationViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationViewDelegate.swift; sourceTree = "<group>"; };
@@ -111,7 +111,7 @@
 		37324A8929406548002BC74E /* View */ = {
 			isa = PBXGroup;
 			children = (
-				37324A8A2940869F002BC74E /* updateView.swift */,
+				37324A8A2940869F002BC74E /* UpdateView.swift */,
 				37324A8C29408ADB002BC74E /* CustomNavigationView.swift */,
 			);
 			path = View;
@@ -324,7 +324,7 @@
 				37EF1612293DD86C00951A60 /* SceneDelegate.swift in Sources */,
 				37EF162A293E13BE00951A60 /* Date+Extension.swift in Sources */,
 				37EF1645293F684400951A60 /* WiseSayingView.swift in Sources */,
-				37324A8B2940869F002BC74E /* updateView.swift in Sources */,
+				37324A8B2940869F002BC74E /* UpdateView.swift in Sources */,
 				37EF1643293F0C3500951A60 /* Grade.swift in Sources */,
 				37EF1649293F6D8B00951A60 /* DiaryView.swift in Sources */,
 				37324A8429405FE2002BC74E /* PlanUpdateViewController.swift in Sources */,

@@ -139,7 +139,7 @@ extension BannerViewController: UITableViewDelegate {
 
 extension BannerViewController: PlanUpdateViewControllerDelegate {
     func planUpdateViewController(_ updateModel: Model) {
-        models = models.filter { $0.date == selectedDate }
+        models = models.filter { $0.date != updateModel.date }
         models.append(updateModel)
         
         diaryView.reloadData()
