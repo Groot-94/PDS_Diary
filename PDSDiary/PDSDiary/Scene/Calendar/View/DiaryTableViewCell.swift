@@ -25,6 +25,7 @@ final class DiaryTableViewCell: UITableViewCell {
     private let gradeLabel: UILabel =  {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.setContentHuggingPriority(.required, for: .horizontal)
         
         return label
     }()

@@ -29,8 +29,7 @@ final class BannerViewController: UIViewController {
         let configuration = UIImage.SymbolConfiguration(font: font)
         let image = UIImage(systemName: "plus.app", withConfiguration: configuration)?.withRenderingMode(.alwaysOriginal)
         
-        let plusButton = UIBarButtonItem(title: nil, image: image, target: self, action: #selector(didTapPlusButton))
-        plusButton.tintColor = .black
+        let plusButton = UIBarButtonItem(title: nil, image: image?.withTintColor(.systemRed), target: self, action: #selector(didTapPlusButton))
         navigationItem.title = "성공이의 하루"
         navigationItem.rightBarButtonItem = plusButton
         navigationController?.navigationBar.shadowImage = UIImage()
@@ -41,6 +40,7 @@ final class BannerViewController: UIViewController {
     private func didTapPlusButton() {
         let alertController = UIAlertController(title: "계획 추가", message: nil, preferredStyle: .alert)
         alertController.addTextField()
+        alertController.textFields?.first?.font = .preferredFont(forTextStyle: .body, compatibleWith: .none)
         
         let closeAction = UIAlertAction(title: "취소", style: .cancel)
         let addAction = UIAlertAction(title: "추가", style: .default) { [weak self] _ in
@@ -49,8 +49,8 @@ final class BannerViewController: UIViewController {
             
             self?.models.append(Model(date: date.convertCurrenDate(),
                                         plan: input,
-                                        doing: "",
-                                        feedback: "",
+                                        doing: "실행",
+                                        feedback: "평가",
                                         grade: .none))
             
             self?.diaryView.reloadData()
@@ -116,10 +116,10 @@ extension BannerViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: false)
         
         let viewController = PlanUpdateViewController()
-        present(viewController, animated: true)
-        
         viewController.delegate = self
         viewController.configureItem(currentModels[indexPath.row])
+        
+        present(viewController, animated: true)
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {

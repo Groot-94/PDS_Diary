@@ -1,5 +1,5 @@
 //
-//  PlanUpdateView.swift
+//  updateView.swift
 //  PDSDiary
 //
 //  Created by Groot on 2022/12/07.
@@ -7,8 +7,8 @@
 
 import UIKit
 
-final class PlanUpdateView: UIView {
-    private var pdsModel: Model?
+final class updateView: UIView {
+    private var model: Model?
     
     private let mainScrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -35,6 +35,7 @@ final class PlanUpdateView: UIView {
         textField.layer.borderWidth = 1
         textField.layer.borderColor = CGColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
         textField.backgroundColor = .systemBackground
+        textField.font = .preferredFont(forTextStyle: .body, compatibleWith: .none)
         textField.addLeftPadding()
         
         return textField
@@ -46,6 +47,7 @@ final class PlanUpdateView: UIView {
         textView.layer.cornerCurve = .continuous
         textView.layer.cornerRadius = 10.0
         textView.layer.borderWidth = 1
+        textView.font = .preferredFont(forTextStyle: .body, compatibleWith: .none)
         textView.layer.borderColor = CGColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
         
         return textView
@@ -57,6 +59,7 @@ final class PlanUpdateView: UIView {
         textView.layer.cornerCurve = .continuous
         textView.layer.cornerRadius = 10.0
         textView.layer.borderWidth = 1
+        textView.font = .preferredFont(forTextStyle: .body, compatibleWith: .none)
         textView.layer.borderColor = CGColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
         
         return textView
@@ -83,26 +86,26 @@ final class PlanUpdateView: UIView {
         doTextView.text = model?.doing
         feedbackTextView.text = model?.feedback
         gradeSegmentedControl.selectedSegmentIndex = model?.grade.score ?? 0
-        pdsModel = model
+        self.model = model
     }
     
-    func item() -> Model? {
+    func makeModel() -> Model? {
         switch gradeSegmentedControl.selectedSegmentIndex {
         case 0:
-            pdsModel?.grade = .good
+            model?.grade = .good
         case 1:
-            pdsModel?.grade = .soso
+            model?.grade = .soso
         case 2:
-            pdsModel?.grade = .bad
+            model?.grade = .bad
         default:
-            pdsModel?.grade = .none
+            model?.grade = .none
         }
         
-        pdsModel?.plan = planTextField.text ?? ""
-        pdsModel?.doing = doTextView.text
-        pdsModel?.feedback = feedbackTextView.text
+        model?.plan = planTextField.text ?? ""
+        model?.doing = doTextView.text
+        model?.feedback = feedbackTextView.text
         
-        return pdsModel
+        return model
     }
     
     private func configureView() {

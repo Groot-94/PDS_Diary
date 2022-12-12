@@ -13,7 +13,7 @@ final class CalendarView: UIView {
         let calendarView = UICalendarView()
         calendarView.translatesAutoresizingMaskIntoConstraints = false
         calendarView.backgroundColor = .systemBackground
-        calendarView.tintColor = .systemMint
+        calendarView.tintColor = .systemRed
         calendarView.layer.cornerCurve = .continuous
         calendarView.layer.cornerRadius = 10.0
         calendarView.layer.borderWidth = 1

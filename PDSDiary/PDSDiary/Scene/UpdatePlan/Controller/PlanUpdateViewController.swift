@@ -9,7 +9,7 @@ import UIKit
 
 final class PlanUpdateViewController: UIViewController {
     private let customNavigation = CustomNavigationView()
-    private let planUpdateView = PlanUpdateView()
+    private let planUpdateView = updateView()
     var delegate: PlanUpdateViewControllerDelegate?
     
     override func viewDidLoad() {
@@ -56,7 +56,7 @@ extension PlanUpdateViewController: CustomNavigationViewDelegate {
     }
     
     func didTapAddButton() {
-        guard let model = planUpdateView.item() else { return }
+        guard let model = planUpdateView.makeModel() else { return }
         
         delegate?.planUpdateViewController(model)
         dismiss(animated: true)

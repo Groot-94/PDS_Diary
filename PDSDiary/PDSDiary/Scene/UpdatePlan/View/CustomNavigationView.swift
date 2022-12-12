@@ -23,7 +23,7 @@ final class CustomNavigationView: UIView {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(systemName: "arrow.uturn.backward.circle"), for: .normal)
-        button.tintColor = .black
+        button.tintColor = .systemRed
         
         return button
     }()
@@ -40,7 +40,7 @@ final class CustomNavigationView: UIView {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(systemName: "rectangle.and.pencil.and.ellipsis"), for: .normal)
-        button.tintColor = .black
+        button.tintColor = .systemRed
         
         return button
     }()

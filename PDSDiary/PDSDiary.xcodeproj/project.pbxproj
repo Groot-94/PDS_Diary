@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		37324A8429405FE2002BC74E /* PlanUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37324A8329405FE2002BC74E /* PlanUpdateViewController.swift */; };
-		37324A8B2940869F002BC74E /* PlanUpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37324A8A2940869F002BC74E /* PlanUpdateView.swift */; };
+		37324A8B2940869F002BC74E /* updateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37324A8A2940869F002BC74E /* updateView.swift */; };
 		37324A8D29408ADB002BC74E /* CustomNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37324A8C29408ADB002BC74E /* CustomNavigationView.swift */; };
 		37324A8F2941BE84002BC74E /* UITextField+Extenstion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37324A8E2941BE84002BC74E /* UITextField+Extenstion.swift */; };
 		37CD76CE2942F90800E0C9DF /* CustomNavigationViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CD76CD2942F90800E0C9DF /* CustomNavigationViewDelegate.swift */; };
@@ -35,7 +35,7 @@
 
 /* Begin PBXFileReference section */
 		37324A8329405FE2002BC74E /* PlanUpdateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanUpdateViewController.swift; sourceTree = "<group>"; };
-		37324A8A2940869F002BC74E /* PlanUpdateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanUpdateView.swift; sourceTree = "<group>"; };
+		37324A8A2940869F002BC74E /* updateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = updateView.swift; sourceTree = "<group>"; };
 		37324A8C29408ADB002BC74E /* CustomNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationView.swift; sourceTree = "<group>"; };
 		37324A8E2941BE84002BC74E /* UITextField+Extenstion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extenstion.swift"; sourceTree = "<group>"; };
 		37CD76CD2942F90800E0C9DF /* CustomNavigationViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationViewDelegate.swift; sourceTree = "<group>"; };
@@ -94,8 +94,8 @@
 		37324A8729406509002BC74E /* UpdatePlan */ = {
 			isa = PBXGroup;
 			children = (
-				37324A8929406548002BC74E /* View */,
 				37324A882940653B002BC74E /* Controller */,
+				37324A8929406548002BC74E /* View */,
 			);
 			path = UpdatePlan;
 			sourceTree = "<group>";
@@ -111,7 +111,7 @@
 		37324A8929406548002BC74E /* View */ = {
 			isa = PBXGroup;
 			children = (
-				37324A8A2940869F002BC74E /* PlanUpdateView.swift */,
+				37324A8A2940869F002BC74E /* updateView.swift */,
 				37324A8C29408ADB002BC74E /* CustomNavigationView.swift */,
 			);
 			path = View;
@@ -324,7 +324,7 @@
 				37EF1612293DD86C00951A60 /* SceneDelegate.swift in Sources */,
 				37EF162A293E13BE00951A60 /* Date+Extension.swift in Sources */,
 				37EF1645293F684400951A60 /* WiseSayingView.swift in Sources */,
-				37324A8B2940869F002BC74E /* PlanUpdateView.swift in Sources */,
+				37324A8B2940869F002BC74E /* updateView.swift in Sources */,
 				37EF1643293F0C3500951A60 /* Grade.swift in Sources */,
 				37EF1649293F6D8B00951A60 /* DiaryView.swift in Sources */,
 				37324A8429405FE2002BC74E /* PlanUpdateViewController.swift in Sources */,
@@ -476,8 +476,8 @@
 				INFOPLIST_FILE = PDSDiary/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -486,9 +486,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Groot.PDSDiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -504,8 +507,8 @@
 				INFOPLIST_FILE = PDSDiary/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -514,9 +517,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Groot.PDSDiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
