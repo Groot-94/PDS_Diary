@@ -37,14 +37,14 @@ final class DiaryView: UIView {
     }
     
     private func configureView() {
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.backgroundColor = .systemBackground
-        self.layer.cornerCurve = .continuous
-        self.layer.cornerRadius = 10.0
-        self.layer.borderWidth = 1
-        self.layer.borderColor = CGColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+        translatesAutoresizingMaskIntoConstraints = false
+        backgroundColor = .systemBackground
+        layer.cornerCurve = .continuous
+        layer.cornerRadius = 10.0
+        layer.borderWidth = 1
+        layer.borderColor = CGColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
         
-        self.addSubview(diaryTableView)
+        addSubview(diaryTableView)
         
         NSLayoutConstraint.activate([
             diaryTableView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 16),

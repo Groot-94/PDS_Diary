@@ -9,6 +9,7 @@ import UIKit
 
 final class BannerViewController: UIViewController {
     private var selectedDate = Date()
+    private var manager = Manager()
     private var models = [Model]()
     private var currentModels = [Model]()
     private let wiseSayingView = WiseSayingView()
@@ -20,20 +21,22 @@ final class BannerViewController: UIViewController {
         
         configureNavigation()
         configureView()
-        calendarView.configureCalenderView(self)
-        diaryView.configureTableView(self)
+        fetch()
     }
     
-    private func configureNavigation() {
-        let font = UIFont.systemFont(ofSize: 15)
-        let configuration = UIImage.SymbolConfiguration(font: font)
-        let image = UIImage(systemName: "plus.app", withConfiguration: configuration)?.withRenderingMode(.alwaysOriginal)
-        
-        let plusButton = UIBarButtonItem(title: nil, image: image?.withTintColor(.systemRed), target: self, action: #selector(didTapPlusButton))
-        navigationItem.title = "성공이의 하루"
-        navigationItem.rightBarButtonItem = plusButton
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+    private func fetch() {
+        manager.useCase.read { [weak self] result in
+            switch result {
+            case .success(let models):
+                self?.models = models
+                
+                DispatchQueue.main.async {
+                    self?.diaryView.reloadData()
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
     
     @objc
@@ -47,13 +50,13 @@ final class BannerViewController: UIViewController {
             guard let input = alertController.textFields?[0].text,
                   let date = self?.selectedDate else { return }
             
-            self?.models.append(Model(date: date.convertCurrenDate(),
-                                        plan: input,
-                                        doing: "실행",
-                                        feedback: "평가",
-                                        grade: .none))
+            self?.manager.useCase.create(model: Model(date: date.convertCurrenDate(),
+                                                      plan: input,
+                                                      doing: "실행",
+                                                      feedback: "평가",
+                                                      grade: .none))
             
-            self?.diaryView.reloadData()
+            self?.fetch()
         }
         
         alertController.addAction(closeAction)
@@ -82,6 +85,21 @@ final class BannerViewController: UIViewController {
         NSLayoutConstraint.activate([
             diaryView.heightAnchor.constraint(equalTo: mainStackView.heightAnchor, multiplier: 0.32)
         ])
+        
+        calendarView.configureCalenderView(self)
+        diaryView.configureTableView(self)
+    }
+    
+    private func configureNavigation() {
+        let font = UIFont.systemFont(ofSize: 15)
+        let configuration = UIImage.SymbolConfiguration(font: font)
+        let image = UIImage(systemName: "plus.app", withConfiguration: configuration)?.withRenderingMode(.alwaysOriginal)
+        
+        let plusButton = UIBarButtonItem(title: nil, image: image?.withTintColor(.systemRed), target: self, action: #selector(didTapPlusButton))
+        navigationItem.title = "PDS Diary"
+        navigationItem.rightBarButtonItem = plusButton
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
     }
 }
 
@@ -90,7 +108,7 @@ extension BannerViewController: UICalendarSelectionSingleDateDelegate {
         guard let date = dateComponents?.date else { return }
         
         selectedDate = date
-        diaryView.reloadData()
+        fetch()
     }
 }
 
@@ -103,7 +121,7 @@ extension BannerViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "Diary", for: indexPath) as? DiaryTableViewCell else { return UITableViewCell() }
-
+        
         cell.configureItems(currentModels[indexPath.row].plan,
                             grade: currentModels[indexPath.row].grade)
         
@@ -115,7 +133,7 @@ extension BannerViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
         
-        let viewController = PlanUpdateViewController()
+        let viewController = UpdateViewController()
         viewController.delegate = self
         viewController.configureItem(currentModels[indexPath.row])
         
@@ -124,11 +142,10 @@ extension BannerViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteSwipeAction = UIContextualAction(style: .destructive, title: "삭제", handler: { [weak self] _, _, completionHaldler in
-            guard let date = self?.currentModels[indexPath.row].date,
-                  let deletedModels = self?.models.filter ({ $0.date != date }) else { return }
+            guard let date = self?.currentModels[indexPath.row].date else { return }
             
-            self?.models = deletedModels
-            self?.diaryView.reloadData()
+            self?.manager.useCase.delete(date: date)
+            self?.fetch()
             
             completionHaldler(true)
         })
@@ -139,9 +156,8 @@ extension BannerViewController: UITableViewDelegate {
 
 extension BannerViewController: PlanUpdateViewControllerDelegate {
     func planUpdateViewController(_ updateModel: Model) {
-        models = models.filter { $0.date != updateModel.date }
-        models.append(updateModel)
+        manager.useCase.update(updateModel)
         
-        diaryView.reloadData()
+        fetch()
     }
 }

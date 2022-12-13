@@ -1,5 +1,5 @@
 //
-//  DiaryDummy.swift
+//  DummyData.swift
 //  PDSDiary
 //
 //  Created by Groot on 2022/12/05.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum DiaryDummy {
+enum DummyData {
     static var dictionary =
     [
         Date().convert():

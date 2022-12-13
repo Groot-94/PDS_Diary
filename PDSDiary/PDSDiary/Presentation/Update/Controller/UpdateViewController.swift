@@ -1,5 +1,5 @@
 //
-//  PlanUpdateViewController.swift
+//  UpdateViewController.swift
 //  PDSDiary
 //
 //  Created by Groot on 2022/12/07.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class PlanUpdateViewController: UIViewController {
+final class UpdateViewController: UIViewController {
     private let customNavigation = CustomNavigationView()
     private let planUpdateView = UpdateView()
     var delegate: PlanUpdateViewControllerDelegate?
@@ -50,7 +50,7 @@ final class PlanUpdateViewController: UIViewController {
     }
 }
 
-extension PlanUpdateViewController: CustomNavigationViewDelegate {
+extension UpdateViewController: CustomNavigationViewDelegate {
     func didTapCloseButton() {
         dismiss(animated: true)
     }

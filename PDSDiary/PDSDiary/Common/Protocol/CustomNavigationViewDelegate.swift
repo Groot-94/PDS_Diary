@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  CustomNavigationViewDelegate.swift
 //  PDSDiary
 //
 //  Created by Groot on 2022/12/09.
