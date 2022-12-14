@@ -174,6 +174,10 @@
 		37CD76D32947127800E0C9DF /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				37CD76ED29471A7A00E0C9DF /* CoreDataRepository.swift */,
+				37EF1618293DD86C00951A60 /* PDSDiary.xcdatamodeld */,
+				37CD76E1294713C400E0C9DF /* PDSModel+CoreDataClass.swift */,
+				37CD76E2294713C400E0C9DF /* PDSModel+CoreDataProperties.swift */,
 				37CD76D42947128D00E0C9DF /* Module */,
 			);
 			path = CoreData;
@@ -182,11 +186,7 @@
 		37CD76D42947128D00E0C9DF /* Module */ = {
 			isa = PBXGroup;
 			children = (
-				37EF1618293DD86C00951A60 /* PDSDiary.xcdatamodeld */,
-				37CD76E1294713C400E0C9DF /* PDSModel+CoreDataClass.swift */,
-				37CD76E2294713C400E0C9DF /* PDSModel+CoreDataProperties.swift */,
 				37CD76D62947128D00E0C9DF /* CoreDataManager.swift */,
-				37CD76ED29471A7A00E0C9DF /* CoreDataRepository.swift */,
 			);
 			path = Module;
 			sourceTree = "<group>";

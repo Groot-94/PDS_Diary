@@ -23,6 +23,4 @@ extension PDSModel {
 
 }
 
-extension PDSModel : Identifiable {
-
-}
+extension PDSModel : Identifiable {}
