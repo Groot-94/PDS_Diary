@@ -23,7 +23,7 @@ final class UpdateViewController: UIViewController {
         addKeyboardNotifications()
     }
     
-    func configureItem(_ model: Model) {
+    func configureItem(_ model: DiaryModel) {
         updateView.configureItem(model)
     }
     

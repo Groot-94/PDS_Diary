@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Model {
+struct DiaryModel {
     let date: Date
     var plan: String
     var doing: String

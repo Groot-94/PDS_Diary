@@ -8,7 +8,7 @@
 import UIKit
 
 final class UpdateView: UIView {
-    private var model: Model?
+    private var model: DiaryModel?
     
     private let mainScrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -89,14 +89,14 @@ final class UpdateView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureItem(_ model: Model?) {
+    func configureItem(_ model: DiaryModel?) {
         planTextField.text = model?.plan
         configureTextViewsText(model)
         gradeSegmentedControl.selectedSegmentIndex = model?.grade.score ?? 0
         self.model = model
     }
     
-    private func configureTextViewsText(_ model: Model?) {
+    private func configureTextViewsText(_ model: DiaryModel?) {
         doingTextView.text = model?.doing
         feedbackTextView.text = model?.feedback
         
@@ -109,7 +109,7 @@ final class UpdateView: UIView {
         }
     }
     
-    func makeModel() -> Model? {
+    func makeModel() -> DiaryModel? {
         switch gradeSegmentedControl.selectedSegmentIndex {
         case 0:
             model?.grade = .good

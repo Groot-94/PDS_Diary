@@ -10,8 +10,8 @@ import UIKit
 final class BannerViewController: UIViewController {
     private var selectedDate = Date()
     private var manager = Manager()
-    private var models = [Model]()
-    private var currentModels = [Model]()
+    private var models = [DiaryModel]()
+    private var currentModels = [DiaryModel]()
     private let wiseSayingView = WiseSayingView()
     private let calendarView = CalendarView()
     private let diaryView = DiaryView()
@@ -50,7 +50,7 @@ final class BannerViewController: UIViewController {
             guard let input = alertController.textFields?[0].text,
                   let date = self?.selectedDate else { return }
             
-            self?.manager.useCase.create(model: Model(date: date.convertCurrenDate(),
+            self?.manager.useCase.create(model: DiaryModel(date: date.convertCurrenDate(),
                                                       plan: input,
                                                       doing: "실행내용을 작성하세요.",
                                                       feedback: "평가를 작성하세요.",
@@ -155,7 +155,7 @@ extension BannerViewController: UITableViewDelegate {
 }
 
 extension BannerViewController: PlanUpdateViewControllerDelegate {
-    func planUpdateViewController(_ updateModel: Model) {
+    func planUpdateViewController(_ updateModel: DiaryModel) {
         manager.useCase.update(updateModel)
         
         fetch()

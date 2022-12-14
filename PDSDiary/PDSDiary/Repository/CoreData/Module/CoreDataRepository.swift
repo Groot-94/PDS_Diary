@@ -8,13 +8,13 @@
 import Foundation
 
 final class CoreDataRepository: PDSDiaryRepository {
-    private let coreDataManager: CoreDataManager<Model>
+    private let coreDataManager: CoreDataManager<DiaryModel>
     
     init() {
-        self.coreDataManager = CoreDataManager<Model>(modelName: "PDSDiary", entityName: "PDSModel")
+        self.coreDataManager = CoreDataManager<DiaryModel>(modelName: "PDSDiary", entityName: "PDSModel")
     }
     
-    func create(model: Model) {
+    func create(model: DiaryModel) {
         let dictionnary = [
             "date": model.date,
             "plan": model.plan,
@@ -26,11 +26,11 @@ final class CoreDataRepository: PDSDiaryRepository {
         coreDataManager.create(entityKeyValue: dictionnary)
     }
     
-    func read(completion: @escaping (Result<[Model], Error>) -> Void) {
+    func read(completion: @escaping (Result<[DiaryModel], Error>) -> Void) {
         switch coreDataManager.read(request: PDSModel.fetchRequest()) {
         case .success(let fetchList):
             let models = fetchList.map {
-                Model(date: $0.date ?? Date(),
+                DiaryModel(date: $0.date ?? Date(),
                       plan: $0.plan ?? "",
                       doing: $0.doing ?? "",
                       feedback: $0.feedback ?? "",
@@ -43,7 +43,7 @@ final class CoreDataRepository: PDSDiaryRepository {
         }
     }
     
-    func update(_ model: Model) {
+    func update(_ model: DiaryModel) {
         switch coreDataManager.read(request: PDSModel.fetchRequest()) {
         case .success(let fetchList):
             guard let filteredList = fetchList.filter({ $0.date == model.date }).first else { return }

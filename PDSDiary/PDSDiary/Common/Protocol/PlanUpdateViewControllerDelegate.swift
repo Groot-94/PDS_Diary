@@ -8,5 +8,5 @@
 import Foundation
 
 protocol PlanUpdateViewControllerDelegate: NSObject {
-    func planUpdateViewController(_ updateModel: Model)
+    func planUpdateViewController(_ updateModel: DiaryModel)
 }

@@ -14,15 +14,15 @@ final class UseCase: PDSDiaryUseCase {
         self.repository = repository
     }
     
-    func create(model: Model) {
+    func create(model: DiaryModel) {
         repository.create(model: model)
     }
     
-    func read(completion: @escaping (Result<[Model], Error>) -> Void) {
+    func read(completion: @escaping (Result<[DiaryModel], Error>) -> Void) {
         repository.read(completion: completion)
     }
     
-    func update(_ model: Model) {
+    func update(_ model: DiaryModel) {
         repository.update(model)
     }
     
