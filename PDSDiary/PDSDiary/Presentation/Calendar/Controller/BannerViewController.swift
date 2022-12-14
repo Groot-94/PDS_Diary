@@ -52,8 +52,8 @@ final class BannerViewController: UIViewController {
             
             self?.manager.useCase.create(model: Model(date: date.convertCurrenDate(),
                                                       plan: input,
-                                                      doing: "실행",
-                                                      feedback: "평가",
+                                                      doing: "실행내용을 작성하세요.",
+                                                      feedback: "평가를 작성하세요.",
                                                       grade: .none))
             
             self?.fetch()

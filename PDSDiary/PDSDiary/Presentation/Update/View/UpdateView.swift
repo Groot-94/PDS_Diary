@@ -14,6 +14,7 @@ final class UpdateView: UIView {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.showsVerticalScrollIndicator = false
+        scrollView.keyboardDismissMode = .interactive
         
         return scrollView
     }()
@@ -36,12 +37,13 @@ final class UpdateView: UIView {
         textField.layer.borderColor = CGColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
         textField.backgroundColor = .systemBackground
         textField.font = .preferredFont(forTextStyle: .body, compatibleWith: .none)
+        textField.placeholder = "계획을 작성하세요"
         textField.addLeftPadding()
         
         return textField
     }()
     
-    private let doTextView: UITextView = {
+    private let doingTextView: UITextView = {
         let textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.layer.cornerCurve = .continuous
@@ -49,6 +51,9 @@ final class UpdateView: UIView {
         textView.layer.borderWidth = 1
         textView.font = .preferredFont(forTextStyle: .body, compatibleWith: .none)
         textView.layer.borderColor = CGColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+        textView.contentInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        textView.tag = 0
+        textView.showsVerticalScrollIndicator = false
         
         return textView
     }()
@@ -61,6 +66,9 @@ final class UpdateView: UIView {
         textView.layer.borderWidth = 1
         textView.font = .preferredFont(forTextStyle: .body, compatibleWith: .none)
         textView.layer.borderColor = CGColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+        textView.contentInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        textView.tag = 1
+        textView.showsVerticalScrollIndicator = false
         
         return textView
     }()
@@ -83,10 +91,22 @@ final class UpdateView: UIView {
     
     func configureItem(_ model: Model?) {
         planTextField.text = model?.plan
-        doTextView.text = model?.doing
-        feedbackTextView.text = model?.feedback
+        configureTextViewsText(model)
         gradeSegmentedControl.selectedSegmentIndex = model?.grade.score ?? 0
         self.model = model
+    }
+    
+    private func configureTextViewsText(_ model: Model?) {
+        doingTextView.text = model?.doing
+        feedbackTextView.text = model?.feedback
+        
+        if model?.doing == "실행내용을 작성하세요." {
+            doingTextView.textColor = .lightGray
+        }
+        
+        if model?.feedback == "평가를 작성하세요." {
+            feedbackTextView.textColor = .lightGray
+        }
     }
     
     func makeModel() -> Model? {
@@ -102,10 +122,23 @@ final class UpdateView: UIView {
         }
         
         model?.plan = planTextField.text ?? ""
-        model?.doing = doTextView.text
+        model?.doing = doingTextView.text
         model?.feedback = feedbackTextView.text
         
         return model
+    }
+    
+    func configureTextViews(_ viewController: UIViewController) {
+        doingTextView.delegate = viewController as? UITextViewDelegate
+        feedbackTextView.delegate = viewController as? UITextViewDelegate
+    }
+    
+    func setScrollIndicatorInsets(_ height: CGFloat) {
+        let firstResponder = UIResponder.currentResponder
+        guard let textView = firstResponder as? UITextView,
+              textView == feedbackTextView else { return }
+        
+        mainScrollView.setContentOffset(CGPointMake(0, height), animated: true)
     }
     
     private func configureView() {
@@ -127,7 +160,7 @@ final class UpdateView: UIView {
             mainStackView.bottomAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.bottomAnchor)
         ])
         
-        [planTextField, doTextView, feedbackTextView, gradeSegmentedControl].forEach { mainStackView.addArrangedSubview($0) }
+        [planTextField, doingTextView, feedbackTextView, gradeSegmentedControl].forEach { mainStackView.addArrangedSubview($0) }
         
         NSLayoutConstraint.activate([
             planTextField.heightAnchor.constraint(equalToConstant: 50)
@@ -138,9 +171,9 @@ final class UpdateView: UIView {
         ])
         
         NSLayoutConstraint.activate([
-            doTextView.heightAnchor.constraint(equalTo: mainScrollView.heightAnchor, multiplier: 0.4)
+            doingTextView.heightAnchor.constraint(equalTo: mainScrollView.heightAnchor, multiplier: 0.4)
         ])
-
+        
         NSLayoutConstraint.activate([
             feedbackTextView.heightAnchor.constraint(equalTo: mainScrollView.heightAnchor, multiplier: 0.4)
         ])

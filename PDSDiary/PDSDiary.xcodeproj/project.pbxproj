@@ -23,6 +23,8 @@
 		37CD76F029471E4E00E0C9DF /* UseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CD76EF29471E4E00E0C9DF /* UseCase.swift */; };
 		37CD76F229471F6400E0C9DF /* Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CD76F129471F6400E0C9DF /* Manager.swift */; };
 		37CD76F52947200D00E0C9DF /* PDSDiaryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CD76F42947200D00E0C9DF /* PDSDiaryManager.swift */; };
+		37CD76F729498E4500E0C9DF /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CD76F629498E4500E0C9DF /* UIView+Extension.swift */; };
+		37CD76F929498E5A00E0C9DF /* UIResponder+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CD76F829498E5A00E0C9DF /* UIResponder+Extension.swift */; };
 		37EF1610293DD86C00951A60 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF160F293DD86C00951A60 /* AppDelegate.swift */; };
 		37EF1612293DD86C00951A60 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF1611293DD86C00951A60 /* SceneDelegate.swift */; };
 		37EF1614293DD86C00951A60 /* BannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF1613293DD86C00951A60 /* BannerViewController.swift */; };
@@ -60,6 +62,8 @@
 		37CD76EF29471E4E00E0C9DF /* UseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseCase.swift; sourceTree = "<group>"; };
 		37CD76F129471F6400E0C9DF /* Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Manager.swift; sourceTree = "<group>"; };
 		37CD76F42947200D00E0C9DF /* PDSDiaryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDSDiaryManager.swift; sourceTree = "<group>"; };
+		37CD76F629498E4500E0C9DF /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		37CD76F829498E5A00E0C9DF /* UIResponder+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+Extension.swift"; sourceTree = "<group>"; };
 		37EF160C293DD86C00951A60 /* PDSDiary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PDSDiary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37EF160F293DD86C00951A60 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		37EF1611293DD86C00951A60 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -247,6 +251,8 @@
 			children = (
 				37EF1629293E13BE00951A60 /* Date+Extension.swift */,
 				37324A8E2941BE84002BC74E /* UITextField+Extenstion.swift */,
+				37CD76F629498E4500E0C9DF /* UIView+Extension.swift */,
+				37CD76F829498E5A00E0C9DF /* UIResponder+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -397,7 +403,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37CD76F729498E4500E0C9DF /* UIView+Extension.swift in Sources */,
 				37EF1651293F725100951A60 /* HTTPMethod.swift in Sources */,
+				37CD76F929498E5A00E0C9DF /* UIResponder+Extension.swift in Sources */,
 				37EF162F293E17D700951A60 /* DummyData.swift in Sources */,
 				37EF162D293E152A00951A60 /* DiaryTableViewCell.swift in Sources */,
 				37CD76EB29471A2100E0C9DF /* PDSDiaryRepository.swift in Sources */,
