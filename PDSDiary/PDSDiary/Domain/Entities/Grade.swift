@@ -24,7 +24,7 @@ enum Grade: String {
         }
     }
     
-    var imoticon: String {
+    var emoticon: String {
         switch self {
         case .good:
             return "😆"

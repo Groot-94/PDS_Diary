@@ -54,6 +54,6 @@ final class DiaryTableViewCell: UITableViewCell {
     
     func configureItems(_ plan: String?, grade: Grade) {
         planLabel.text = plan
-        gradeLabel.text = grade.imoticon
+        gradeLabel.text = grade.emoticon
     }
 }

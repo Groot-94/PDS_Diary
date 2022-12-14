@@ -208,16 +208,8 @@
 			isa = PBXGroup;
 			children = (
 				37CD76F129471F6400E0C9DF /* Manager.swift */,
-				37CD76F329471FB500E0C9DF /* Protocol */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		37CD76F329471FB500E0C9DF /* Protocol */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Protocol;
 			sourceTree = "<group>";
 		};
 		37EF1603293DD86C00951A60 = {

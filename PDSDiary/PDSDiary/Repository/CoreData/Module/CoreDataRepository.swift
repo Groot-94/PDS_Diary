@@ -8,7 +8,7 @@
 import Foundation
 
 final class CoreDataRepository: PDSDiaryRepository {
-    let coreDataManager: CoreDataManager<Model>
+    private let coreDataManager: CoreDataManager<Model>
     
     init() {
         self.coreDataManager = CoreDataManager<Model>(modelName: "PDSDiary", entityName: "PDSModel")
@@ -46,8 +46,7 @@ final class CoreDataRepository: PDSDiaryRepository {
     func update(_ model: Model) {
         switch coreDataManager.read(request: PDSModel.fetchRequest()) {
         case .success(let fetchList):
-            guard let filteredList = fetchList.filter({ $0.date == model.date }).first
-            else { return }
+            guard let filteredList = fetchList.filter({ $0.date == model.date }).first else { return }
             
             let dictionnary = [
                 "date": model.date,
@@ -66,8 +65,7 @@ final class CoreDataRepository: PDSDiaryRepository {
     func delete(date: Date) {
         switch coreDataManager.read(request: PDSModel.fetchRequest()) {
         case .success(let fetchList):
-            guard let object = fetchList.filter({ $0.date == date }).first
-            else { return }
+            guard let object = fetchList.filter({ $0.date == date }).first else { return }
             
             coreDataManager.delete(object: object)
         case .failure(let error):
