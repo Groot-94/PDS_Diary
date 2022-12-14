@@ -10,6 +10,6 @@ import Foundation
 import CoreData
 
 
-public class PDSModel: NSManagedObject {
+final public class PDSModel: NSManagedObject {
 
 }

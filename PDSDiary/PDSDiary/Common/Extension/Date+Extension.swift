@@ -23,7 +23,6 @@ extension Date {
         let hour = Calendar.current.dateComponents([.hour], from: date)
         let minute = Calendar.current.dateComponents([.minute], from: date)
         let second = Calendar.current.dateComponents([.second], from: date)
-        
         let dateComponents = DateComponents(timeZone: nil ,
                                             year: year.year,
                                             month: month.month,
