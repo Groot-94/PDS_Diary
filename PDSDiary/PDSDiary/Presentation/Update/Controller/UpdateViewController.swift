@@ -91,14 +91,14 @@ extension UpdateViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.text == "실행내용을 작성하세요." || textView.text == "평가를 작성하세요." {
             textView.text = nil
-            textView.textColor = .black
+            textView.textColor = .label
         }
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             textView.text = textView.tag == 0 ? "실행내용을 작성하세요." : "평가를 작성하세요."
-            textView.textColor = .lightGray
+            textView.textColor = .placeholderText
         }
     }
 }
