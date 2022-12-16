@@ -9,7 +9,4 @@
 import Foundation
 import CoreData
 
-
-final public class PDSModel: NSManagedObject {
-
-}
+final public class PDSModel: NSManagedObject {}

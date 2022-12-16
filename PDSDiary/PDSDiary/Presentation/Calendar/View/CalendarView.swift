@@ -36,7 +36,6 @@ final class CalendarView: UIView {
     
     private func configureView() {
         self.addSubview(calendarView)
-        
         NSLayoutConstraint.activate([
             calendarView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
             calendarView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),

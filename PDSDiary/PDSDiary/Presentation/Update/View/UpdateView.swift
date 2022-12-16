@@ -120,7 +120,7 @@ final class UpdateView: UIView {
         default:
             model?.grade = .none
         }
-        
+    
         model?.plan = planTextField.text ?? ""
         model?.doing = doingTextView.text
         model?.feedback = feedbackTextView.text
@@ -137,12 +137,13 @@ final class UpdateView: UIView {
         let firstResponder = UIResponder.currentResponder
         guard let textView = firstResponder as? UITextView,
               textView == feedbackTextView else { return }
-        
         mainScrollView.setContentOffset(CGPointMake(0, height), animated: true)
     }
     
     private func configureView() {
         self.addSubview(mainScrollView)
+        mainScrollView.addSubview(mainStackView)
+        [planTextField, doingTextView, feedbackTextView, gradeSegmentedControl].forEach { mainStackView.addArrangedSubview($0) }
         
         NSLayoutConstraint.activate([
             mainScrollView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
@@ -151,16 +152,12 @@ final class UpdateView: UIView {
             mainScrollView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor)
         ])
         
-        mainScrollView.addSubview(mainStackView)
-        
         NSLayoutConstraint.activate([
             mainStackView.topAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.topAnchor),
             mainStackView.leadingAnchor.constraint(equalTo: mainScrollView.frameLayoutGuide.leadingAnchor),
             mainStackView.trailingAnchor.constraint(equalTo: mainScrollView.frameLayoutGuide.trailingAnchor),
             mainStackView.bottomAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.bottomAnchor)
         ])
-        
-        [planTextField, doingTextView, feedbackTextView, gradeSegmentedControl].forEach { mainStackView.addArrangedSubview($0) }
         
         NSLayoutConstraint.activate([
             planTextField.heightAnchor.constraint(equalToConstant: 50)

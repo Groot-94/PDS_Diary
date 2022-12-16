@@ -22,11 +22,10 @@ final class CoreDataRepository: PDSDiaryRepository {
             "feedback": model.feedback,
             "grade": model.grade.rawValue
         ] as [String: Any]
-        
         coreDataManager.create(entityKeyValue: dictionnary)
     }
     
-    func read(completion: @escaping (Result<[DiaryModel], Error>) -> Void) {
+    func read() async -> Result<[DiaryModel], Error> {
         switch coreDataManager.read(request: PDSModel.fetchRequest()) {
         case .success(let fetchList):
             let models = fetchList.map {
@@ -37,9 +36,9 @@ final class CoreDataRepository: PDSDiaryRepository {
                       grade: Grade(rawValue: $0.grade ?? "") ?? .none)
             }
             
-            completion(.success(models))
+            return .success(models)
         case .failure(let error):
-            completion(.failure(error))
+            return .failure(error)
         }
     }
     
@@ -47,15 +46,14 @@ final class CoreDataRepository: PDSDiaryRepository {
         switch coreDataManager.read(request: PDSModel.fetchRequest()) {
         case .success(let fetchList):
             guard let filteredList = fetchList.filter({ $0.date == model.date }).first else { return }
-            
-            let dictionnary = [
+            let dictionnary =
+            [
                 "date": model.date,
                 "plan": model.plan,
                 "doing": model.doing,
                 "feedback": model.feedback,
                 "grade": model.grade.rawValue
             ] as [String: Any]
-            
             coreDataManager.update(object: filteredList, entityKeyValue: dictionnary)
         case .failure(let error):
             print(error)
@@ -66,7 +64,6 @@ final class CoreDataRepository: PDSDiaryRepository {
         switch coreDataManager.read(request: PDSModel.fetchRequest()) {
         case .success(let fetchList):
             guard let object = fetchList.filter({ $0.date == date }).first else { return }
-            
             coreDataManager.delete(object: object)
         case .failure(let error):
             print(error)

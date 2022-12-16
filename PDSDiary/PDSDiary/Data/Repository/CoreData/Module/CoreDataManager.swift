@@ -9,7 +9,6 @@ import CoreData
 
 final class CoreDataManager<T> {
     typealias Entity = T
-    
     private let modelName: String
     private let entityName: String
     
@@ -33,29 +32,19 @@ final class CoreDataManager<T> {
     private lazy var context: NSManagedObjectContext = persistentContainer.viewContext
     
     func create(entityKeyValue: [String: Any]) {
-        guard let entity = NSEntityDescription.entity(forEntityName: entityName,
-                                                      in: context)
-        else { return }
-        
-        let managerObject = NSManagedObject(entity: entity,
-                                            insertInto: context)
-        entityKeyValue.forEach {
-            managerObject.setValue($0.value, forKey: $0.key)
-        }
-        
+        guard let entity = NSEntityDescription.entity(forEntityName: entityName, in: context) else { return }
+        let managerObject = NSManagedObject(entity: entity, insertInto: context)
+        entityKeyValue.forEach { managerObject.setValue($0.value, forKey: $0.key) }
         saveContext()
     }
     
     func read<Entity>(request: NSFetchRequest<Entity>) -> Result<[Entity], CoreDataError> {
         guard let fetchObject = try? context.fetch(request) as [Entity] else { return .failure(.fetch) }
-        
         return .success(fetchObject)
     }
     
-    func update(object: NSManagedObject,
-                entityKeyValue: [String: Any]) {
+    func update(object: NSManagedObject, entityKeyValue: [String: Any]) {
         entityKeyValue.forEach { object.setValue($0.value, forKey: $0.key) }
-        
         saveContext()
     }
     

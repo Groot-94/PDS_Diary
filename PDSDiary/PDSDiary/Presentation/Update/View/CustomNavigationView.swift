@@ -66,6 +66,9 @@ final class CustomNavigationView: UIView {
     
     private func configureView() {
         self.addSubview(mainStackView)
+        [closeButton, titleLabel, updateButton].forEach { mainStackView.addArrangedSubview($0) }
+        closeButton.addTarget(self, action: #selector(didTapCloseButton), for: .touchDown)
+        updateButton.addTarget(self, action: #selector(didTapAddButton), for: .touchDown)
         
         NSLayoutConstraint.activate([
             mainStackView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
@@ -73,10 +76,5 @@ final class CustomNavigationView: UIView {
             mainStackView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
             mainStackView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor)
         ])
-        
-        [closeButton, titleLabel, updateButton].forEach { mainStackView.addArrangedSubview($0) }
-        
-        closeButton.addTarget(self, action: #selector(didTapCloseButton), for: .touchDown)
-        updateButton.addTarget(self, action: #selector(didTapAddButton), for: .touchDown)
     }
 }

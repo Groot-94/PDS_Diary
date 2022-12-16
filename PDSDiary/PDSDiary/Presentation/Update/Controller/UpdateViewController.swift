@@ -14,7 +14,6 @@ final class UpdateViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         configureView()
     }
     
@@ -36,7 +35,6 @@ final class UpdateViewController: UIViewController {
     private func keyboardWillShow(_ notification: NSNotification){
         guard let userInfo = notification.userInfo,
               let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
-        
         updateView.setScrollIndicatorInsets(keyboardFrame.size.height)
     }
     
@@ -50,9 +48,11 @@ final class UpdateViewController: UIViewController {
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
         mainStackView.axis = .vertical
         mainStackView.spacing = 16
-        
         view.backgroundColor = .systemGray6
         view.addSubview(mainStackView)
+        [customNavigation, updateView].forEach { mainStackView.addArrangedSubview($0) }
+        customNavigation.delegate = self
+        updateView.configureTextViews(self)
         
         NSLayoutConstraint.activate([
             mainStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -61,16 +61,11 @@ final class UpdateViewController: UIViewController {
             mainStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
         
-        [customNavigation, updateView].forEach { mainStackView.addArrangedSubview($0) }
-        
         NSLayoutConstraint.activate([
             customNavigation.topAnchor.constraint(equalTo: mainStackView.topAnchor),
             customNavigation.heightAnchor.constraint(equalTo: mainStackView.heightAnchor, multiplier: 0.05),
             customNavigation.widthAnchor.constraint(equalTo: mainStackView.widthAnchor)
         ])
-        
-        customNavigation.delegate = self
-        updateView.configureTextViews(self)
     }
 }
 
@@ -81,7 +76,6 @@ extension UpdateViewController: CustomNavigationViewDelegate {
     
     func didTapAddButton() {
         guard let model = updateView.makeModel() else { return }
-        
         delegate?.planUpdateViewController(model)
         dismiss(animated: true)
     }

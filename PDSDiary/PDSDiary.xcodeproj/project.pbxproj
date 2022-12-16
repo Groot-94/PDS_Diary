@@ -27,7 +27,7 @@
 		37CD76F929498E5A00E0C9DF /* UIResponder+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CD76F829498E5A00E0C9DF /* UIResponder+Extension.swift */; };
 		37EF1610293DD86C00951A60 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF160F293DD86C00951A60 /* AppDelegate.swift */; };
 		37EF1612293DD86C00951A60 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF1611293DD86C00951A60 /* SceneDelegate.swift */; };
-		37EF1614293DD86C00951A60 /* BannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF1613293DD86C00951A60 /* BannerViewController.swift */; };
+		37EF1614293DD86C00951A60 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EF1613293DD86C00951A60 /* MainViewController.swift */; };
 		37EF161A293DD86C00951A60 /* PDSDiary.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 37EF1618293DD86C00951A60 /* PDSDiary.xcdatamodeld */; };
 		37EF161C293DD86D00951A60 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 37EF161B293DD86D00951A60 /* Assets.xcassets */; };
 		37EF161F293DD86D00951A60 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37EF161D293DD86D00951A60 /* LaunchScreen.storyboard */; };
@@ -67,7 +67,7 @@
 		37EF160C293DD86C00951A60 /* PDSDiary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PDSDiary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37EF160F293DD86C00951A60 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		37EF1611293DD86C00951A60 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		37EF1613293DD86C00951A60 /* BannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerViewController.swift; sourceTree = "<group>"; };
+		37EF1613293DD86C00951A60 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		37EF1619293DD86C00951A60 /* PDSDiary.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PDSDiary.xcdatamodel; sourceTree = "<group>"; };
 		37EF161B293DD86D00951A60 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		37EF161E293DD86D00951A60 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -97,6 +97,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		371FCC54294EF5910011E349 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				37CD76D2294711E400E0C9DF /* Repository */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
 		37324A85294064CA002BC74E /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
@@ -239,7 +247,7 @@
 				37EF1633293E21F100951A60 /* Common */,
 				37CD76D12946F14800E0C9DF /* Domain */,
 				37324A85294064CA002BC74E /* Presentation */,
-				37CD76D2294711E400E0C9DF /* Repository */,
+				371FCC54294EF5910011E349 /* Data */,
 				37EF1636293E223C00951A60 /* Resources */,
 				37EF1634293E220400951A60 /* TestDouble */,
 			);
@@ -280,7 +288,7 @@
 		37EF1632293E21DC00951A60 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				37EF1613293DD86C00951A60 /* BannerViewController.swift */,
+				37EF1613293DD86C00951A60 /* MainViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -410,7 +418,7 @@
 				37EF162D293E152A00951A60 /* DiaryTableViewCell.swift in Sources */,
 				37CD76EB29471A2100E0C9DF /* PDSDiaryRepository.swift in Sources */,
 				37EF1627293E071F00951A60 /* DiaryModel.swift in Sources */,
-				37EF1614293DD86C00951A60 /* BannerViewController.swift in Sources */,
+				37EF1614293DD86C00951A60 /* MainViewController.swift in Sources */,
 				37324A8F2941BE84002BC74E /* UITextField+Extenstion.swift in Sources */,
 				37CD76F029471E4E00E0C9DF /* UseCase.swift in Sources */,
 				37CD76DD2947128D00E0C9DF /* CoreDataManager.swift in Sources */,

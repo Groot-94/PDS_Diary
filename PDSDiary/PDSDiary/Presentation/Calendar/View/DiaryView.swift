@@ -43,7 +43,6 @@ final class DiaryView: UIView {
         layer.cornerRadius = 10.0
         layer.borderWidth = 1
         layer.borderColor = CGColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
-        
         addSubview(diaryTableView)
         
         NSLayoutConstraint.activate([

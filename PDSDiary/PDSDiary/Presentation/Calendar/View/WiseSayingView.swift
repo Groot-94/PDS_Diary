@@ -38,21 +38,20 @@ final class WiseSayingView: UIView {
     }
     
     private func configureWiseSayingLabel() {
-        let wiseSayingRequest = WiseSayingRequest()
-        
-        wiseSayingRequest.excute { result in
-            switch result {
+        Task.init {
+            let wiseSayingRequest = WiseSayingRequest()
+            let data = await wiseSayingRequest.excute()
+            switch data {
             case .success(let data):
                 DispatchQueue.main.async { [weak self] in
                     guard let wiseSaying = data[1]["respond"] as? String else { return }
-                    
                     self?.wiseSayingLabel.text = wiseSaying
                         .replacingOccurrences(of: "-", with: "–")
                         .split(separator: "–")
                         .map { String($0) }
                         .joined(separator: "\n\n")
                 }
-            case .failure( _):
+            case .failure(_):
                 break
             }
         }
@@ -65,8 +64,8 @@ final class WiseSayingView: UIView {
         self.layer.cornerRadius = 10.0
         self.layer.borderWidth = 1
         self.layer.borderColor = CGColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
-        
         self.addSubview(wiseSayingScrollView)
+        wiseSayingScrollView.addSubview(wiseSayingLabel)
         
         NSLayoutConstraint.activate([
             wiseSayingScrollView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
@@ -74,8 +73,6 @@ final class WiseSayingView: UIView {
             wiseSayingScrollView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
             wiseSayingScrollView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor)
         ])
-        
-        wiseSayingScrollView.addSubview(wiseSayingLabel)
         
         NSLayoutConstraint.activate([
             wiseSayingLabel.topAnchor.constraint(equalTo: wiseSayingScrollView.contentLayoutGuide.topAnchor, constant: 16),

@@ -41,6 +41,7 @@ final class DiaryTableViewCell: UITableViewCell {
     
     private func configureView() {
         contentView.addSubview(mainStackView)
+        [planLabel, gradeLabel].forEach { mainStackView.addArrangedSubview($0) }
         
         NSLayoutConstraint.activate([
             mainStackView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 8),
@@ -48,8 +49,6 @@ final class DiaryTableViewCell: UITableViewCell {
             mainStackView.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -8),
             mainStackView.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor, constant: -8)
         ])
-        
-        [planLabel, gradeLabel].forEach { mainStackView.addArrangedSubview($0) }
     }
     
     func configureItems(_ plan: String?, grade: Grade) {

@@ -18,8 +18,8 @@ final class UseCase: PDSDiaryUseCase {
         repository.create(model: model)
     }
     
-    func read(completion: @escaping (Result<[DiaryModel], Error>) -> Void) {
-        repository.read(completion: completion)
+    func read() async -> Result<[DiaryModel], Error> {
+        return await repository.read()
     }
     
     func update(_ model: DiaryModel) {

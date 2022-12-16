@@ -9,7 +9,7 @@ import Foundation
 
 protocol PDSDiaryRepository {
     func create(model: DiaryModel)
-    func read(completion: @escaping (Result<[DiaryModel], Error>) -> Void)
+    func read() async -> Result<[DiaryModel], Error>
     func update(_ model: DiaryModel)
     func delete(date: Date)
 }
