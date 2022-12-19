@@ -19,8 +19,8 @@ enum Grade: String {
             return 1
         case .bad:
             return 2
-        case .none: 
-            return 3
+        case .none:
+            return -1
         }
     }
     

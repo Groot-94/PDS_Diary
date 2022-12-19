@@ -60,15 +60,15 @@ final class CustomNavigationView: UIView {
     }
     
     @objc
-    private func didTapAddButton() {
-        delegate?.didTapAddButton()
+    private func didTapSaveButton() {
+        delegate?.didTapSaveButton()
     }
     
     private func configureView() {
         self.addSubview(mainStackView)
         [closeButton, titleLabel, updateButton].forEach { mainStackView.addArrangedSubview($0) }
         closeButton.addTarget(self, action: #selector(didTapCloseButton), for: .touchDown)
-        updateButton.addTarget(self, action: #selector(didTapAddButton), for: .touchDown)
+        updateButton.addTarget(self, action: #selector(didTapSaveButton), for: .touchDown)
         
         NSLayoutConstraint.activate([
             mainStackView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),

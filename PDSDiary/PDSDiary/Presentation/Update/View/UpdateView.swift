@@ -89,10 +89,10 @@ final class UpdateView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureItem(_ model: DiaryModel?) {
+    func configureItems(_ model: DiaryModel?) {
         planTextField.text = model?.plan
         configureTextViewsText(model)
-        gradeSegmentedControl.selectedSegmentIndex = model?.grade.score ?? 0
+        gradeSegmentedControl.selectedSegmentIndex = model?.grade.score ?? -1
         self.model = model
     }
     
@@ -107,6 +107,15 @@ final class UpdateView: UIView {
         if model?.feedback == "평가를 작성하세요." {
             feedbackTextView.textColor = .lightGray
         }
+    }
+    
+    func hasChangesModel() -> Bool {
+        guard model?.plan == planTextField.text,
+              model?.doing == doingTextView.text,
+              model?.feedback == feedbackTextView.text,
+              model?.grade.score == gradeSegmentedControl.selectedSegmentIndex else { return true }
+        
+        return false
     }
     
     func makeModel() -> DiaryModel? {

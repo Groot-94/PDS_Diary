@@ -9,5 +9,5 @@ import Foundation
 
 protocol CustomNavigationViewDelegate: NSObject {
     func didTapCloseButton()
-    func didTapAddButton()
+    func didTapSaveButton()
 }

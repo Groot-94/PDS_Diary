@@ -23,7 +23,7 @@ final class UpdateViewController: UIViewController {
     }
     
     func configureItem(_ model: DiaryModel) {
-        updateView.configureItem(model)
+        updateView.configureItems(model)
     }
     
     private func addKeyboardNotifications(){
@@ -44,14 +44,16 @@ final class UpdateViewController: UIViewController {
     }
     
     private func configureView() {
+        view.backgroundColor = .systemGray6
+        isModalInPresentation = true
         let mainStackView = UIStackView()
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
         mainStackView.axis = .vertical
         mainStackView.spacing = 16
-        view.backgroundColor = .systemGray6
         view.addSubview(mainStackView)
         [customNavigation, updateView].forEach { mainStackView.addArrangedSubview($0) }
         customNavigation.delegate = self
+        self.presentationController?.delegate = self
         updateView.configureTextViews(self)
         
         NSLayoutConstraint.activate([
@@ -74,7 +76,7 @@ extension UpdateViewController: CustomNavigationViewDelegate {
         dismiss(animated: true)
     }
     
-    func didTapAddButton() {
+    func didTapSaveButton() {
         guard let model = updateView.makeModel() else { return }
         delegate?.planUpdateViewController(model)
         dismiss(animated: true)
@@ -94,5 +96,22 @@ extension UpdateViewController: UITextViewDelegate {
             textView.text = textView.tag == 0 ? "실행내용을 작성하세요." : "평가를 작성하세요."
             textView.textColor = .placeholderText
         }
+    }
+}
+
+extension UpdateViewController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
+        if updateView.hasChangesModel() {
+            let alertController = UIAlertController(title: "", message: "변경 사항을 폐기할까요?", preferredStyle: .actionSheet)
+            let disposeAction = UIAlertAction(title: "변경 사항 폐기", style: .default) { [weak self] _ in self?.dismiss(animated: true) }
+            let cancelAction = UIAlertAction(title: "계속 편집하기",  style: .destructive) { _ in return }
+            alertController.addAction(disposeAction)
+            alertController.addAction(cancelAction)
+            present(alertController, animated: true)
+            
+            return
+        }
+        
+        dismiss(animated: true)
     }
 }
