@@ -10,7 +10,7 @@ import UIKit
 final class UpdateViewController: UIViewController {
     private let customNavigation = CustomNavigationView()
     private let updateView = UpdateView()
-    weak var delegate: PlanUpdateViewControllerDelegate?
+    weak var delegate: UpdateViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,7 +78,7 @@ extension UpdateViewController: CustomNavigationViewDelegate {
     
     func didTapSaveButton() {
         guard let model = updateView.makeModel() else { return }
-        delegate?.planUpdateViewController(model)
+        delegate?.updateViewController(model)
         dismiss(animated: true)
     }
 }

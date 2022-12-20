@@ -10,7 +10,7 @@ import UIKit
 final class MainViewController: UIViewController {
     private var selectedDate = Date()
     private var manager = Manager()
-    private var models = [DiaryModel]()
+    private var models = Models.shared.data
     private var currentModels = [DiaryModel]()
     private let wiseSayingView = WiseSayingView()
     private let calendarView = CalendarView()
@@ -138,8 +138,8 @@ extension MainViewController: UITableViewDelegate {
     }
 }
 
-extension MainViewController: PlanUpdateViewControllerDelegate {
-    func planUpdateViewController(_ updateModel: DiaryModel) {
+extension MainViewController: UpdateViewControllerDelegate {
+    func updateViewController(_ updateModel: DiaryModel) {
         manager.useCase.update(updateModel)
         fetch()
     }
