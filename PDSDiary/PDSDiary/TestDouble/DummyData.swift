@@ -10,7 +10,7 @@ import Foundation
 enum DummyData {
     static var dictionary =
     [
-        Date().convert():
+        Date().convertOnlyYearMonthDay():
             [
                 DiaryModel(date: Date(), plan: "할거야1", doing: "한다1", feedback: "잘했다1", grade: .good),
                 DiaryModel(date: Date(), plan: "할거야2", doing: "한다2", feedback: "잘했다2", grade: .soso),

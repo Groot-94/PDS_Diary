@@ -14,6 +14,8 @@ final class DiaryView: UIView {
         tableView.layer.cornerRadius = 10
         tableView.showsVerticalScrollIndicator = false
         tableView.register(DiaryTableViewCell.self, forCellReuseIdentifier: "Diary")
+        tableView.separatorStyle = .singleLine
+        tableView.separatorInset = .zero
         
         return tableView
     }()

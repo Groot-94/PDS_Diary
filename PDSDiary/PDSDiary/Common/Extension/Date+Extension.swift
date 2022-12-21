@@ -8,14 +8,21 @@
 import Foundation
 
 extension Date {
-    func convert() -> String {
+    func convertOnlyYearMonthDay() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyyMMdd"
         
         return dateFormatter.string(from: self)
     }
     
-    func convertCurrenDate() -> Date {
+    func convertHangul() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy년 MM월 dd일"
+        
+        return dateFormatter.string(from: self)
+    }
+    
+    func convertToCurrenTime() -> Date {
         let date = Date()
         let year = Calendar.current.dateComponents([.year], from: self)
         let month = Calendar.current.dateComponents([.month], from: self)

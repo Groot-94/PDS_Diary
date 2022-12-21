@@ -10,7 +10,6 @@ import UIKit
 final class MainViewController: UIViewController {
     private var selectedDate = Date()
     private var manager = Manager()
-    private var models = Models.shared.data
     private var currentModels = [DiaryModel]()
     private let wiseSayingView = WiseSayingView()
     private let calendarView = CalendarView()
@@ -25,10 +24,10 @@ final class MainViewController: UIViewController {
     
     private func fetch() {
         Task {
-        let fetchData = await manager.useCase.read()
+            let fetchData = await manager.useCase.read()
             switch fetchData {
             case .success(let models):
-                self.models = models
+                Models.shared.data = models
                 DispatchQueue.main.async {
                     self.diaryView.reloadData()
                 }
@@ -47,16 +46,22 @@ final class MainViewController: UIViewController {
         let addAction = UIAlertAction(title: "추가", style: .default) { [weak self] _ in
             guard let input = alertController.textFields?[0].text,
                   let date = self?.selectedDate else { return }
-            self?.manager.useCase.create(model: DiaryModel(date: date.convertCurrenDate(),
-                                                      plan: input,
-                                                      doing: "실행내용을 작성하세요.",
-                                                      feedback: "평가를 작성하세요.",
-                                                      grade: .none))
+            self?.manager.useCase.create(model: DiaryModel(date: date.convertToCurrenTime(),
+                                                           plan: input,
+                                                           doing: "실행내용을 작성하세요.",
+                                                           feedback: "평가를 작성하세요.",
+                                                           grade: .none))
             self?.fetch()
         }
         alertController.addAction(closeAction)
         alertController.addAction(addAction)
         present(alertController, animated: true)
+    }
+    
+    @objc
+    private func didTapSearchButton() {
+        let viewController = SeachViewController()
+        navigationController?.pushViewController(viewController, animated: true)
     }
     
     private func configureView() {
@@ -85,10 +90,19 @@ final class MainViewController: UIViewController {
     private func configureNavigation() {
         let font = UIFont.systemFont(ofSize: 15)
         let configuration = UIImage.SymbolConfiguration(font: font)
-        let image = UIImage(systemName: "plus.app", withConfiguration: configuration)?.withRenderingMode(.alwaysOriginal)
-        let plusButton = UIBarButtonItem(title: nil, image: image?.withTintColor(.systemRed), target: self, action: #selector(didTapPlusButton))
+        let searchImage = UIImage(systemName: "magnifyingglass.circle", withConfiguration: configuration)?.withRenderingMode(.alwaysOriginal)
+        let searchButton = UIBarButtonItem(title: nil, image: searchImage?.withTintColor(.systemRed), target: self, action: #selector(didTapSearchButton))
+        let plusImage = UIImage(systemName: "plus.app", withConfiguration: configuration)?.withRenderingMode(.alwaysOriginal)
+        let plusButton = UIBarButtonItem(title: nil, image: plusImage?.withTintColor(.systemRed), target: self, action: #selector(didTapPlusButton))
+        let backImage = UIImage(systemName: "arrow.uturn.backward.circle", withConfiguration: configuration)?.withRenderingMode(.alwaysOriginal)
+        let backButton = UIBarButtonItem(title: nil, image: backImage?.withTintColor(.systemRed), target: self, action: nil)
+        
         navigationItem.title = "PDS Diary"
+        navigationItem.leftBarButtonItem = searchButton
         navigationItem.rightBarButtonItem = plusButton
+        navigationItem.backBarButtonItem = backButton
+        navigationController?.navigationBar.backIndicatorImage = UIImage()
+        navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage()
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
     }
@@ -104,7 +118,8 @@ extension MainViewController: UICalendarSelectionSingleDateDelegate {
 
 extension MainViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        currentModels = models.filter { $0.date.convert() == selectedDate.convert() }
+        currentModels = Models.shared.data
+            .filter { $0.date.convertOnlyYearMonthDay() == selectedDate.convertOnlyYearMonthDay() }
         
         return currentModels.count
     }
