@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		371FCC592951761F0011E349 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371FCC582951761F0011E349 /* Models.swift */; };
 		371FCC5E295178BD0011E349 /* SeachViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371FCC5D295178BD0011E349 /* SeachViewController.swift */; };
 		37324A8429405FE2002BC74E /* UpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37324A8329405FE2002BC74E /* UpdateViewController.swift */; };
 		37324A8B2940869F002BC74E /* UpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37324A8A2940869F002BC74E /* UpdateView.swift */; };
@@ -48,7 +47,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		371FCC582951761F0011E349 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		371FCC5D295178BD0011E349 /* SeachViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeachViewController.swift; sourceTree = "<group>"; };
 		37324A8329405FE2002BC74E /* UpdateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateViewController.swift; sourceTree = "<group>"; };
 		37324A8A2940869F002BC74E /* UpdateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateView.swift; sourceTree = "<group>"; };
@@ -113,7 +111,6 @@
 			isa = PBXGroup;
 			children = (
 				371FCC5B295178900011E349 /* Controller */,
-				371FCC5C2951789A0011E349 /* View */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -124,13 +121,6 @@
 				371FCC5D295178BD0011E349 /* SeachViewController.swift */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		371FCC5C2951789A0011E349 /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		37324A85294064CA002BC74E /* Presentation */ = {
@@ -249,7 +239,6 @@
 			isa = PBXGroup;
 			children = (
 				37CD76F129471F6400E0C9DF /* Manager.swift */,
-				371FCC582951761F0011E349 /* Models.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -475,7 +464,6 @@
 				37EF1652293F725100951A60 /* APIRequest.swift in Sources */,
 				37CD76EE29471A7A00E0C9DF /* CoreDataRepository.swift in Sources */,
 				37EF1650293F725100951A60 /* APIError.swift in Sources */,
-				371FCC592951761F0011E349 /* Models.swift in Sources */,
 				371FCC5E295178BD0011E349 /* SeachViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

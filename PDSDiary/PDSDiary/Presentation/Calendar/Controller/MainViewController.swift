@@ -10,6 +10,7 @@ import UIKit
 final class MainViewController: UIViewController {
     private var selectedDate = Date()
     private var manager = Manager()
+    private var models = [DiaryModel]()
     private var currentModels = [DiaryModel]()
     private let wiseSayingView = WiseSayingView()
     private let calendarView = CalendarView()
@@ -19,6 +20,10 @@ final class MainViewController: UIViewController {
         super.viewDidLoad()
         configureNavigation()
         configureView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         fetch()
     }
     
@@ -26,8 +31,8 @@ final class MainViewController: UIViewController {
         Task {
             let fetchData = await manager.useCase.read()
             switch fetchData {
-            case .success(let models):
-                Models.shared.data = models
+            case .success(let fetchModels):
+                self.models = fetchModels
                 DispatchQueue.main.async {
                     self.diaryView.reloadData()
                 }
@@ -46,12 +51,14 @@ final class MainViewController: UIViewController {
         let addAction = UIAlertAction(title: "추가", style: .default) { [weak self] _ in
             guard let input = alertController.textFields?[0].text,
                   let date = self?.selectedDate else { return }
-            self?.manager.useCase.create(model: DiaryModel(date: date.convertToCurrenTime(),
-                                                           plan: input,
-                                                           doing: "실행내용을 작성하세요.",
-                                                           feedback: "평가를 작성하세요.",
-                                                           grade: .none))
-            self?.fetch()
+            Task {
+                await self?.manager.useCase.create(model: DiaryModel(date: date.convertToCurrenTime(),
+                                                                     plan: input,
+                                                                     doing: "실행내용을 작성하세요.",
+                                                                     feedback: "평가를 작성하세요.",
+                                                                     grade: .none))
+                self?.fetch()
+            }
         }
         alertController.addAction(closeAction)
         alertController.addAction(addAction)
@@ -61,6 +68,7 @@ final class MainViewController: UIViewController {
     @objc
     private func didTapSearchButton() {
         let viewController = SeachViewController()
+        viewController.manager = manager
         navigationController?.pushViewController(viewController, animated: true)
     }
     
@@ -118,8 +126,7 @@ extension MainViewController: UICalendarSelectionSingleDateDelegate {
 
 extension MainViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        currentModels = Models.shared.data
-            .filter { $0.date.convertOnlyYearMonthDay() == selectedDate.convertOnlyYearMonthDay() }
+        currentModels = models.filter { $0.date.convertOnlyYearMonthDay() == selectedDate.convertOnlyYearMonthDay() }
         
         return currentModels.count
     }
@@ -144,8 +151,12 @@ extension MainViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteSwipeAction = UIContextualAction(style: .destructive, title: "삭제", handler: { [weak self] _, _, completionHaldler in
             guard let date = self?.currentModels[indexPath.row].date else { return }
-            self?.manager.useCase.delete(date: date)
-            self?.fetch()
+            
+            Task {
+                await self?.manager.useCase.delete(date: date)
+                self?.fetch()
+            }
+            
             completionHaldler(true)
         })
         
@@ -155,7 +166,9 @@ extension MainViewController: UITableViewDelegate {
 
 extension MainViewController: UpdateViewControllerDelegate {
     func updateViewController(_ updateModel: DiaryModel) {
-        manager.useCase.update(updateModel)
-        fetch()
+        Task {
+            await manager.useCase.update(updateModel)
+            fetch()
+        }
     }
 }
