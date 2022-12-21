@@ -10,6 +10,8 @@ import UIKit
 final class SeachViewController: UIViewController {
     private var models = [[DiaryModel]]()
     private let diaryView = DiaryView()
+    private var searchWord = ""
+    var manager: PDSDiaryManager?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,9 +19,41 @@ final class SeachViewController: UIViewController {
         configureSearchBar()
     }
     
+    private func fetch() {
+        guard let manager = manager else { return }
+        models.removeAll()
+        
+        Task {
+            let fetchData = await manager.useCase.read()
+            switch fetchData {
+            case .success(let fetchModels):
+                makeSerchModels(fetchModels)
+                DispatchQueue.main.async {
+                    self.diaryView.reloadData()
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    private func makeSerchModels(_ fetchModels: [DiaryModel]) {
+        fetchModels.filter { $0.plan.lowercased().contains(searchWord) }
+            .sorted { $0.date < $1.date }
+            .forEach {
+                if $0.date.convertOnlyYearMonthDay() != models.last?.last?.date.convertOnlyYearMonthDay() {
+                    models.append([$0])
+                    
+                    return
+                } else if models.count > 0 {
+                    models[models.count - 1].append($0)
+                }
+            }
+    }
+    
     private func configureSearchBar() {
         let searchController = UISearchController(searchResultsController: nil)
-        searchController.searchBar.placeholder = "검색 할 계획명을 입력하세요"
+        searchController.searchBar.placeholder = "검색 할 계획을 입력하세요"
         searchController.searchBar.showsCancelButton = false
         searchController.searchResultsUpdater = self
         
@@ -69,29 +103,44 @@ extension SeachViewController: UITableViewDelegate {
         
         return label
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let viewController = UpdateViewController()
+        viewController.delegate = self
+        viewController.configureItem(models[indexPath.section][indexPath.row])
+        present(viewController, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteSwipeAction = UIContextualAction(style: .destructive, title: "삭제", handler: { [weak self] _, _, completionHaldler in
+            guard let date = self?.models[indexPath.section][indexPath.row].date else { return }
+            
+            Task {
+                await self?.manager?.useCase.delete(date: date)
+                self?.fetch()
+            }
+            
+            completionHaldler(true)
+        })
+        
+        return UISwipeActionsConfiguration(actions: [deleteSwipeAction])
+    }
 }
 
 extension SeachViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         guard let text = searchController.searchBar.text?.lowercased() else { return }
-        let filteredModels = Models.shared.data
-            .filter { $0.plan.lowercased().contains(text) }
-            .sorted { $0.date < $1.date }
-        
-        filteredModels.enumerated().forEach {
-            let index = $0.offset
-            if filteredModels[index].date.convertOnlyYearMonthDay() != models.last?.last?.date.convertOnlyYearMonthDay() {
-                models.append([filteredModels[index]])
-                return
-            } else if models.count > 0 {
-                models[models.count - 1].append(filteredModels[index])
-            }
+        searchWord = text
+        fetch()
+    }
+}
+
+extension SeachViewController: UpdateViewControllerDelegate {
+    func updateViewController(_ updateModel: DiaryModel) {
+        Task {
+            await manager?.useCase.update(updateModel)
+            fetch()
         }
-        
-        if filteredModels.count == 0 {
-            models.removeAll()
-        }
-        
-        diaryView.reloadData()
     }
 }
