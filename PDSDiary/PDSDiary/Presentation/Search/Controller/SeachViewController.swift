@@ -15,14 +15,13 @@ final class SeachViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureNavigation()
         configureView()
-        configureSearchBar()
     }
     
     private func fetch() {
         guard let manager = manager else { return }
-        models.removeAll()
-        
+        resetModels()
         Task {
             let fetchData = await manager.useCase.read()
             switch fetchData {
@@ -37,13 +36,17 @@ final class SeachViewController: UIViewController {
         }
     }
     
+    private func resetModels() {
+        models.removeAll()
+    }
+    
     private func makeSerchModels(_ fetchModels: [DiaryModel]) {
-        fetchModels.filter { $0.plan.lowercased().contains(searchWord) }
+        fetchModels
+            .filter { $0.plan.lowercased().contains(searchWord) }
             .sorted { $0.date < $1.date }
             .forEach {
                 if $0.date.convertOnlyYearMonthDay() != models.last?.last?.date.convertOnlyYearMonthDay() {
                     models.append([$0])
-                    
                     return
                 } else if models.count > 0 {
                     models[models.count - 1].append($0)
@@ -51,16 +54,19 @@ final class SeachViewController: UIViewController {
             }
     }
     
-    private func configureSearchBar() {
+    private func configureNavigation() {
+        navigationItem.searchController = makeSearchController()
+        navigationItem.hidesSearchBarWhenScrolling = false
+        navigationItem.searchController?.hidesNavigationBarDuringPresentation = false
+        navigationItem.title = "계획 검색"
+    }
+    
+    private func makeSearchController() -> UISearchController {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchBar.placeholder = "검색 할 계획을 입력하세요"
         searchController.searchBar.showsCancelButton = false
         searchController.searchResultsUpdater = self
-        
-        navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
-        navigationItem.searchController?.hidesNavigationBarDuringPresentation = false
-        navigationItem.title = "계획 검색"
+        return searchController
     }
     
     private func configureView() {
@@ -87,9 +93,10 @@ extension SeachViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "Diary", for: indexPath) as? DiaryTableViewCell else { return UITableViewCell() }
-        cell.configureItems(models[indexPath.section][indexPath.row].plan, grade: models[indexPath.section][indexPath.row].grade)
-        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "Diary", for: indexPath) as? DiaryTableViewCell
+        else { return UITableViewCell() }
+        cell.configureItems(models[indexPath.section][indexPath.row].plan,
+                            grade: models[indexPath.section][indexPath.row].grade)
         return cell
     }
 }
@@ -97,34 +104,41 @@ extension SeachViewController: UITableViewDataSource {
 extension SeachViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let date = models[section].first?.date else { return nil }
+        return makeHeaderLabel(text: date.convertHangul())
+    }
+    
+    private func makeHeaderLabel(text: String?) -> UILabel {
         let label = UILabel()
-        label.text = date.convertHangul()
+        label.text = text
         label.textColor = .systemGray2
         label.font = .preferredFont(forTextStyle: .body)
-        
         return label
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let viewController = UpdateViewController()
-        viewController.delegate = self
-        viewController.configureItem(models[indexPath.section][indexPath.row])
-        present(viewController, animated: true)
+        present(makeUpdateViewController(with: models[indexPath.section][indexPath.row]), animated: true)
     }
     
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let deleteSwipeAction = UIContextualAction(style: .destructive, title: "삭제", handler: { [weak self] _, _, completionHaldler in
+    private func makeUpdateViewController(with model: DiaryModel) -> UpdateViewController {
+        let viewController = UpdateViewController()
+        viewController.delegate = self
+        viewController.configureItem(model)
+        return viewController
+    }
+    
+    func tableView(_ tableView: UITableView,
+                   trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteSwipeAction = UIContextualAction(style: .destructive,
+                                                   title: "삭제",
+                                                   handler: { [weak self] _, _, completionHaldler in
             guard let date = self?.models[indexPath.section][indexPath.row].date else { return }
-            
             Task {
                 await self?.manager?.useCase.delete(date: date)
                 self?.fetch()
             }
-            
             completionHaldler(true)
         })
-        
         return UISwipeActionsConfiguration(actions: [deleteSwipeAction])
     }
 }
