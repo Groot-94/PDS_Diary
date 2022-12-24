@@ -11,14 +11,12 @@ extension Date {
     func convertOnlyYearMonthDay() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyyMMdd"
-        
         return dateFormatter.string(from: self)
     }
     
     func convertHangul() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy년 MM월 dd일"
-        
         return dateFormatter.string(from: self)
     }
     
@@ -37,7 +35,6 @@ extension Date {
                                             hour: hour.hour,
                                             minute: minute.minute,
                                             second: second.second)
-        
         return Calendar.current.date(from: dateComponents) ?? Date()
     }
 }
