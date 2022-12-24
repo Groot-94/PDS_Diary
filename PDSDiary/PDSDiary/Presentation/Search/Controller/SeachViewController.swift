@@ -73,7 +73,6 @@ final class SeachViewController: UIViewController {
         view.backgroundColor = .systemGray6
         view.addSubview(diaryView)
         diaryView.configureTableView(self)
-        
         NSLayoutConstraint.activate([
             diaryView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             diaryView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),

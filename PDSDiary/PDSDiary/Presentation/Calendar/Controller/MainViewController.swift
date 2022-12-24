@@ -11,7 +11,6 @@ final class MainViewController: UIViewController {
     private var selectedDate = Date()
     private var manager = Manager()
     private var models = [DiaryModel]()
-    private var currentModels = [DiaryModel]()
     private let wiseSayingView = WiseSayingView()
     private let calendarView = CalendarView()
     private let diaryView = DiaryView()
@@ -32,7 +31,7 @@ final class MainViewController: UIViewController {
             let fetchData = await manager.useCase.read()
             switch fetchData {
             case .success(let fetchModels):
-                self.models = fetchModels
+                self.models = fetchModels.filter { $0.date.convertOnlyYearMonthDay() == selectedDate.convertOnlyYearMonthDay() }
                 DispatchQueue.main.async {
                     self.diaryView.reloadData()
                 }
@@ -44,6 +43,10 @@ final class MainViewController: UIViewController {
     
     @objc
     private func didTapPlusButton() {
+        present(makeAlertController(), animated: true)
+    }
+    
+    private func makeAlertController() -> UIAlertController {
         let alertController = UIAlertController(title: "계획 추가", message: nil, preferredStyle: .alert)
         alertController.addTextField()
         alertController.textFields?.first?.font = .preferredFont(forTextStyle: .body, compatibleWith: .none)
@@ -52,24 +55,62 @@ final class MainViewController: UIViewController {
             guard let input = alertController.textFields?[0].text,
                   let date = self?.selectedDate else { return }
             Task {
-                await self?.manager.useCase.create(model: DiaryModel(date: date.convertToCurrenTime(),
-                                                                     plan: input,
-                                                                     doing: "실행내용을 작성하세요.",
-                                                                     feedback: "평가를 작성하세요.",
-                                                                     grade: .none))
-                self?.fetch()
+                await self?.createNewModel(plan: input, date: date)
             }
         }
         alertController.addAction(closeAction)
         alertController.addAction(addAction)
-        present(alertController, animated: true)
+        return alertController
+    }
+    
+    private func createNewModel(plan: String, date: Date) async {
+        await self.manager.useCase.create(model: DiaryModel(date: date.convertToCurrenTime(),
+                                                            plan: plan,
+                                                            doing: "실행내용을 작성하세요.",
+                                                            feedback: "평가를 작성하세요.",
+                                                            grade: .none))
+        self.fetch()
     }
     
     @objc
     private func didTapSearchButton() {
+        navigationController?.pushViewController(makeSeachViewController() , animated: true)
+    }
+    
+    private func makeSeachViewController() -> SeachViewController {
         let viewController = SeachViewController()
         viewController.manager = manager
-        navigationController?.pushViewController(viewController, animated: true)
+        return viewController
+    }
+    
+    private func configureNavigation() {
+        let searchButton = UIBarButtonItem(title: nil,
+                                           image: makeImage(systemName: "magnifyingglass.circle"),
+                                           target: self,
+                                           action: #selector(didTapSearchButton))
+        let plusButton = UIBarButtonItem(title: nil, image: makeImage(systemName: "plus.app"),
+                                         target: self,
+                                         action: #selector(didTapPlusButton))
+        let backButton = UIBarButtonItem(title: nil, image: makeImage(systemName: "arrow.uturn.backward.circle"),
+                                         target: self,
+                                         action: nil)
+        
+        navigationItem.title = "PDS Diary"
+        navigationItem.leftBarButtonItem = searchButton
+        navigationItem.rightBarButtonItem = plusButton
+        navigationItem.backBarButtonItem = backButton
+        navigationController?.navigationBar.backIndicatorImage = UIImage()
+        navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage()
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+    }
+    
+    private func makeImage(systemName: String) -> UIImage? {
+        let font = UIFont.systemFont(ofSize: 15)
+        let configuration = UIImage.SymbolConfiguration(font: font)
+        return UIImage(systemName: systemName, withConfiguration: configuration)?
+            .withRenderingMode(.alwaysOriginal)
+            .withTintColor(.systemRed)
     }
     
     private func configureView() {
@@ -82,37 +123,15 @@ final class MainViewController: UIViewController {
         [wiseSayingView, calendarView, diaryView].forEach { mainStackView.addArrangedSubview($0) }
         calendarView.configureCalenderView(self)
         diaryView.configureTableView(self)
-        
         NSLayoutConstraint.activate([
             mainStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
             mainStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             mainStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             mainStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16)
         ])
-        
         NSLayoutConstraint.activate([
             diaryView.heightAnchor.constraint(equalTo: mainStackView.heightAnchor, multiplier: 0.32)
         ])
-    }
-    
-    private func configureNavigation() {
-        let font = UIFont.systemFont(ofSize: 15)
-        let configuration = UIImage.SymbolConfiguration(font: font)
-        let searchImage = UIImage(systemName: "magnifyingglass.circle", withConfiguration: configuration)?.withRenderingMode(.alwaysOriginal)
-        let searchButton = UIBarButtonItem(title: nil, image: searchImage?.withTintColor(.systemRed), target: self, action: #selector(didTapSearchButton))
-        let plusImage = UIImage(systemName: "plus.app", withConfiguration: configuration)?.withRenderingMode(.alwaysOriginal)
-        let plusButton = UIBarButtonItem(title: nil, image: plusImage?.withTintColor(.systemRed), target: self, action: #selector(didTapPlusButton))
-        let backImage = UIImage(systemName: "arrow.uturn.backward.circle", withConfiguration: configuration)?.withRenderingMode(.alwaysOriginal)
-        let backButton = UIBarButtonItem(title: nil, image: backImage?.withTintColor(.systemRed), target: self, action: nil)
-        
-        navigationItem.title = "PDS Diary"
-        navigationItem.leftBarButtonItem = searchButton
-        navigationItem.rightBarButtonItem = plusButton
-        navigationItem.backBarButtonItem = backButton
-        navigationController?.navigationBar.backIndicatorImage = UIImage()
-        navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage()
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
     }
 }
 
@@ -126,15 +145,12 @@ extension MainViewController: UICalendarSelectionSingleDateDelegate {
 
 extension MainViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        currentModels = models.filter { $0.date.convertOnlyYearMonthDay() == selectedDate.convertOnlyYearMonthDay() }
-        
-        return currentModels.count
+        return models.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "Diary", for: indexPath) as? DiaryTableViewCell else { return UITableViewCell() }
-        cell.configureItems(currentModels[indexPath.row].plan, grade: currentModels[indexPath.row].grade)
-        
+        cell.configureItems(models[indexPath.row].plan, grade: models[indexPath.row].grade)
         return cell
     }
 }
@@ -142,24 +158,25 @@ extension MainViewController: UITableViewDataSource {
 extension MainViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
+        present(makeUpdateViewController(with: models[indexPath.row]), animated: true)
+    }
+    
+    private func makeUpdateViewController(with model: DiaryModel) -> UpdateViewController {
         let viewController = UpdateViewController()
         viewController.delegate = self
-        viewController.configureItem(currentModels[indexPath.row])
-        present(viewController, animated: true)
+        viewController.configureItem(model)
+        return viewController
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteSwipeAction = UIContextualAction(style: .destructive, title: "삭제", handler: { [weak self] _, _, completionHaldler in
-            guard let date = self?.currentModels[indexPath.row].date else { return }
-            
+            guard let date = self?.models[indexPath.row].date else { return }
             Task {
                 await self?.manager.useCase.delete(date: date)
                 self?.fetch()
             }
-            
             completionHaldler(true)
         })
-        
         return UISwipeActionsConfiguration(actions: [deleteSwipeAction])
     }
 }
