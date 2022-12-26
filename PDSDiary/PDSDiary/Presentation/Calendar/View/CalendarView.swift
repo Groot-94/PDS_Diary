@@ -21,7 +21,6 @@ final class CalendarView: UIView {
         calendarView.calendar = gregorianCalendar
         calendarView.locale = Locale(identifier: "ko-KR")
         calendarView.fontDesign = .monospaced
-        
         return calendarView
     }()
     
@@ -45,7 +44,7 @@ final class CalendarView: UIView {
     }
     
     func configureCalenderView(_ controller: UICalendarSelectionSingleDateDelegate?) {
-        let dateSelection = UICalendarSelectionSingleDate(delegate: controller)
-        calendarView.selectionBehavior = dateSelection
+        let selectedDate = UICalendarSelectionSingleDate(delegate: controller)
+        calendarView.selectionBehavior = selectedDate
     }
 }

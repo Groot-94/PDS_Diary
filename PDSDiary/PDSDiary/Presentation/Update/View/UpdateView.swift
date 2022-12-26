@@ -15,7 +15,6 @@ final class UpdateView: UIView {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.showsVerticalScrollIndicator = false
         scrollView.keyboardDismissMode = .interactive
-        
         return scrollView
     }()
     
@@ -24,7 +23,6 @@ final class UpdateView: UIView {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 16
-        
         return stackView
     }()
     
@@ -39,7 +37,6 @@ final class UpdateView: UIView {
         textField.font = .preferredFont(forTextStyle: .body, compatibleWith: .none)
         textField.placeholder = "계획을 작성하세요"
         textField.addLeftPadding()
-        
         return textField
     }()
     
@@ -54,7 +51,6 @@ final class UpdateView: UIView {
         textView.contentInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
         textView.tag = 0
         textView.showsVerticalScrollIndicator = false
-        
         return textView
     }()
     
@@ -76,7 +72,6 @@ final class UpdateView: UIView {
     private let gradeSegmentedControl: UISegmentedControl = {
         let segmentedControl = UISegmentedControl(items: ["😄", "😗", "😔"])
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
-        
         return segmentedControl
     }()
     
@@ -114,7 +109,6 @@ final class UpdateView: UIView {
               model?.doing == doingTextView.text,
               model?.feedback == feedbackTextView.text,
               model?.grade.score == gradeSegmentedControl.selectedSegmentIndex else { return true }
-        
         return false
     }
     
@@ -129,11 +123,9 @@ final class UpdateView: UIView {
         default:
             model?.grade = .none
         }
-    
         model?.plan = planTextField.text ?? ""
         model?.doing = doingTextView.text
         model?.feedback = feedbackTextView.text
-        
         return model
     }
     
@@ -144,42 +136,36 @@ final class UpdateView: UIView {
     
     func setScrollIndicatorInsets(_ height: CGFloat) {
         let firstResponder = UIResponder.currentResponder
-        guard let textView = firstResponder as? UITextView,
-              textView == feedbackTextView else { return }
+        guard let textView = firstResponder as? UITextView, textView == feedbackTextView else { return }
         mainScrollView.setContentOffset(CGPointMake(0, height), animated: true)
     }
     
     private func configureView() {
         self.addSubview(mainScrollView)
         mainScrollView.addSubview(mainStackView)
-        [planTextField, doingTextView, feedbackTextView, gradeSegmentedControl].forEach { mainStackView.addArrangedSubview($0) }
-        
+        [planTextField, doingTextView, feedbackTextView, gradeSegmentedControl]
+            .forEach { mainStackView.addArrangedSubview($0) }
         NSLayoutConstraint.activate([
             mainScrollView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
             mainScrollView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
             mainScrollView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
             mainScrollView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor)
         ])
-        
         NSLayoutConstraint.activate([
             mainStackView.topAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.topAnchor),
             mainStackView.leadingAnchor.constraint(equalTo: mainScrollView.frameLayoutGuide.leadingAnchor),
             mainStackView.trailingAnchor.constraint(equalTo: mainScrollView.frameLayoutGuide.trailingAnchor),
             mainStackView.bottomAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.bottomAnchor)
         ])
-        
         NSLayoutConstraint.activate([
             planTextField.heightAnchor.constraint(equalToConstant: 50)
         ])
-        
         NSLayoutConstraint.activate([
             gradeSegmentedControl.heightAnchor.constraint(equalToConstant: 50)
         ])
-        
         NSLayoutConstraint.activate([
             doingTextView.heightAnchor.constraint(equalTo: mainScrollView.heightAnchor, multiplier: 0.4)
         ])
-        
         NSLayoutConstraint.activate([
             feedbackTextView.heightAnchor.constraint(equalTo: mainScrollView.heightAnchor, multiplier: 0.4)
         ])

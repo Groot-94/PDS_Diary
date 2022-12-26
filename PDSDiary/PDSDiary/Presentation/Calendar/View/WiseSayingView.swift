@@ -66,14 +66,12 @@ final class WiseSayingView: UIView {
         self.layer.borderColor = CGColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
         self.addSubview(wiseSayingScrollView)
         wiseSayingScrollView.addSubview(wiseSayingLabel)
-        
         NSLayoutConstraint.activate([
             wiseSayingScrollView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
             wiseSayingScrollView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
             wiseSayingScrollView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
             wiseSayingScrollView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor)
         ])
-        
         NSLayoutConstraint.activate([
             wiseSayingLabel.topAnchor.constraint(equalTo: wiseSayingScrollView.contentLayoutGuide.topAnchor, constant: 16),
             wiseSayingLabel.leadingAnchor.constraint(equalTo: wiseSayingScrollView.frameLayoutGuide.leadingAnchor, constant: 16),

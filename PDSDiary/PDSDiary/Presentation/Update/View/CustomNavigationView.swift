@@ -15,7 +15,6 @@ final class CustomNavigationView: UIView {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.distribution = .equalCentering
-        
         return stackView
     }()
     
@@ -24,7 +23,6 @@ final class CustomNavigationView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(systemName: "arrow.uturn.backward.circle"), for: .normal)
         button.tintColor = .systemRed
-        
         return button
     }()
     
@@ -32,7 +30,6 @@ final class CustomNavigationView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "계획 수정"
-        
         return label
     }()
     
@@ -41,7 +38,6 @@ final class CustomNavigationView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(systemName: "rectangle.and.pencil.and.ellipsis"), for: .normal)
         button.tintColor = .systemRed
-        
         return button
     }()
     
@@ -69,7 +65,6 @@ final class CustomNavigationView: UIView {
         [closeButton, titleLabel, updateButton].forEach { mainStackView.addArrangedSubview($0) }
         closeButton.addTarget(self, action: #selector(didTapCloseButton), for: .touchDown)
         updateButton.addTarget(self, action: #selector(didTapSaveButton), for: .touchDown)
-        
         NSLayoutConstraint.activate([
             mainStackView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
             mainStackView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),

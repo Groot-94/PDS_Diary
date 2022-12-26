@@ -11,14 +11,12 @@ final class DiaryTableViewCell: UITableViewCell {
     private let mainStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        
         return stackView
     }()
     
     private let planLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        
         return label
     }()
     
@@ -26,7 +24,6 @@ final class DiaryTableViewCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.setContentHuggingPriority(.required, for: .horizontal)
-        
         return label
     }()
     
@@ -42,7 +39,6 @@ final class DiaryTableViewCell: UITableViewCell {
     private func configureView() {
         contentView.addSubview(mainStackView)
         [planLabel, gradeLabel].forEach { mainStackView.addArrangedSubview($0) }
-        
         NSLayoutConstraint.activate([
             mainStackView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 8),
             mainStackView.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 8),

@@ -16,7 +16,6 @@ final class DiaryView: UIView {
         tableView.register(DiaryTableViewCell.self, forCellReuseIdentifier: "Diary")
         tableView.separatorStyle = .singleLine
         tableView.separatorInset = .zero
-        
         return tableView
     }()
     
@@ -46,7 +45,6 @@ final class DiaryView: UIView {
         layer.borderWidth = 1
         layer.borderColor = CGColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
         addSubview(diaryTableView)
-        
         NSLayoutConstraint.activate([
             diaryTableView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 16),
             diaryTableView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 16),
