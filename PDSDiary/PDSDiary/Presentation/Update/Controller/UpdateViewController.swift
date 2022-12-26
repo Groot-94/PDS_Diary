@@ -27,8 +27,14 @@ final class UpdateViewController: UIViewController {
     }
     
     private func addKeyboardNotifications(){
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification , object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.keyboardWillShow(_:)),
+                                               name: UIResponder.keyboardWillShowNotification ,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.keyboardWillHide(_:)),
+                                               name: UIResponder.keyboardWillHideNotification,
+                                               object: nil)
     }
     
     @objc
@@ -55,14 +61,12 @@ final class UpdateViewController: UIViewController {
         customNavigation.delegate = self
         self.presentationController?.delegate = self
         updateView.configureTextViews(self)
-        
         NSLayoutConstraint.activate([
             mainStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             mainStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             mainStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             mainStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
-        
         NSLayoutConstraint.activate([
             customNavigation.topAnchor.constraint(equalTo: mainStackView.topAnchor),
             customNavigation.heightAnchor.constraint(equalTo: mainStackView.heightAnchor, multiplier: 0.05),
@@ -102,16 +106,18 @@ extension UpdateViewController: UITextViewDelegate {
 extension UpdateViewController: UIAdaptivePresentationControllerDelegate {
     func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
         if updateView.hasChangesModel() {
-            let alertController = UIAlertController(title: "", message: "변경 사항을 폐기할까요?", preferredStyle: .actionSheet)
-            let disposeAction = UIAlertAction(title: "변경 사항 폐기", style: .default) { [weak self] _ in self?.dismiss(animated: true) }
+            let alertController = UIAlertController(title: "",
+                                                    message: "변경 사항을 폐기할까요?",
+                                                    preferredStyle: .actionSheet)
+            let disposeAction = UIAlertAction(title: "변경 사항 폐기", style: .default) { [weak self] _ in
+                self?.dismiss(animated: true)
+            }
             let cancelAction = UIAlertAction(title: "계속 편집하기",  style: .destructive) { _ in return }
             alertController.addAction(disposeAction)
             alertController.addAction(cancelAction)
             present(alertController, animated: true)
-            
             return
         }
-        
         dismiss(animated: true)
     }
 }
